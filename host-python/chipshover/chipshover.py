@@ -20,17 +20,17 @@ class ChipShover(object):
         #Check if table seems legit
         
         #Abs mode by default
-        self.ser.write("G90\n")
+        self.ser.write(b"G90\n")
         self.wait_done()
         
         #MM by default
-        self.ser.write("G21\n")
+        self.ser.write(b"G21\n")
         self.wait_done()
         
         #TODO - 
         #signal.signal(signal.SIGINT, self.stop)
         
-    def close(self:
+    def close(self):
         """Closes serial port"""
         self.ser.close()
         
@@ -40,7 +40,7 @@ class ChipShover(object):
         Stops movement, but allows further commands. Sending this will
         cause positionvto be wrong if table was moving at the time."""
         self.ser.write(b"M410\n")
-        prtin("**STOP CALLED. Motor positions will be incorrect. Please re-home.")
+        print("**STOP CALLED. Motor positions will be incorrect. Please re-home.")
         
     def kill(self):
         """Calls KILL command (M112) to stop all movement.
@@ -74,11 +74,11 @@ class ChipShover(object):
         """
         
         cmdstr = b"G0 "
-        if x:
+        if x is not None:
             cmdstr += b"X%f"%x
-        if y:
+        if y is not None:
             cmdstr += b"Y%f"%y
-        if z:
+        if z is not None:
             cmdstr += b"Z%f"%z
             
         cmdstr += b"\n"
@@ -86,10 +86,17 @@ class ChipShover(object):
         if debug:
             print(cmdstr)
             
-        self.ser.write(cmdstr)
         
+        self.ser.write(cmdstr)        
         self.wait_done()
+
+        self.wait_for_move()
         
+    def wait_for_move(self):
+        """Wait for current movement to be done"""
+
+        self.ser.flush()
+        self.ser.reset_input_buffer()
         #wait for move to finish
         self.ser.write(b"M400\n")
         self.wait_done()
@@ -106,8 +113,7 @@ class ChipShover(object):
         
         if forcefinish:
             #wait for move to finish
-            self.ser.write(b"M400\n")
-        self.wait_done()
+            self.wait_for_move()
         
         self.ser.write(b"M114\n")
         
@@ -178,7 +184,49 @@ class ChipShover(object):
         self.z_home = self.get_position()[2]
         
         return home_resp
-    
+
+    def validate_move(self, x, y, z):
+        pass
+
+    def sweep_x_y(self, x_start, x_end, y_start, y_end, step=0.1, x_step=None, y_step=None, z_plunge=0):
+        """Sweep X-Y range, yielding at each point. Optionally perform Z-Plunge for BBI probe.
+
+        """
+
+        if x_start > x_end:
+            raise ValueError("X End must be numerically larger than X Start")
+
+        if y_start > y_end:
+            raise ValueError("Y End must be numerically larger than Y Start")
+
+        if x_step is None:
+            x_step = step
+
+        if y_step is None:
+            y_step = step
+
+        x = x_start      
+
+        while x <= x_end:
+            self.move(x=x)
+            y = y_start
+            while y <= y_end:
+                self.move(y=y)         
+
+                if z_plunge:
+                    old_z = self.get_position()[2]
+                    self.move(z = (old_z-z_plunge))
+
+                yield (x, y)
+
+                if z_plunge:
+                    self.move(z = old_z)
+
+                y += y_step
+            x += x_step
+
+
+
     def wait_done(self, timeout=5, debug=False, kill_on_ctrlc=True):
         """Wait for a command to be acknowledged by checking for 'ok' response.
         
@@ -225,5 +273,5 @@ class ChipShover(object):
                 print("Ctrl-C detected - calling stop() to stop table movement")
                 self.stop()
             raise
-                    
+             
         return debug_data
