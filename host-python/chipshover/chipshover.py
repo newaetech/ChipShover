@@ -17,6 +17,9 @@ class ChipShover(object):
         self.ser.rtscts = True
         self.ser.timeout = 0.25
         self.z_home = None
+
+        self.ser.flush()
+        self.ser.reset_input_buffer()
         
         #Check if table seems legit
         
@@ -73,6 +76,7 @@ class ChipShover(object):
         cause positionvto be wrong if table was moving at the time."""
         self.ser.write(b"M410\n")
         print("**STOP CALLED. Motor positions will be incorrect. Please re-home.")
+        self.wait_done()
         
     def kill(self):
         """Calls KILL command (M112) to stop all movement.
@@ -84,6 +88,7 @@ class ChipShover(object):
         """
         self.ser.write(b"M112\n")
         print("***KILL CALLED. Power Cycle Needed!***")
+        self.wait_done()
         
     def move_zdepth(self, z_depth):
         """Sets the Z axis to a given 'depth', as referenced from home.
@@ -198,6 +203,9 @@ class ChipShover(object):
         disable specific axis as well). The command will block
         until the homing operation is complete.
         """
+
+        self.ser.flush()
+        self.ser.reset_input_buffer()        
         
         if x == y == z == False:
             return
