@@ -4,8 +4,9 @@ import time
 
 class ChipShover(object):
     """ChipShover is a controller for XY(Z) tables. Assumes Marlin-based
-       firmware for most commands."""
+       firmware for commands."""
     
+    #Default ChipShover table/firmware combo
     STEPS_PER_MM = 1600
     
     def __init__(self, comport):
@@ -26,6 +27,37 @@ class ChipShover(object):
         #MM by default
         self.ser.write(b"G21\n")
         self.wait_done()
+
+        #Check the "steps per unit" is valid
+        self.ser.write(b"M503\n")
+        results = self.wait_done()
+        try:
+            splitres = results.split(b"Steps per unit:\necho: M92")[1].split(b"\n")[0]
+            splitres = splitres.split(b" ")
+            if splitres[1][0] != ord('X') or \
+               splitres[2][0] != ord('Y') or \
+               splitres[3][0] != ord('Z'):
+                raise IOError("Communication problem attempting to read" + \
+                               "M503 response. %s was splitres"%splitres)
+            xsteps = float(splitres[1][1:])
+            ysteps = float(splitres[2][1:])
+            zsteps = float(splitres[3][1:])
+
+            if xsteps != ysteps != zsteps:
+                raise ValueError("XSTEPS/YSTEPS/ZSTEPS differs. Abort. %f %f %f"%(xsteps, ysteps, zsteps))
+
+            if xsteps < 100 or xsteps > 10E3:
+                raise ValueError("Sanity check in XSTEPS failed. %f"%xsteps)
+
+            self.STEPS_PER_MM = int(xsteps)
+
+        except:
+            print("Failed to read steps/mm, check communication is OK.")
+            print("Response to M503: %s"%results)
+            raise
+
+
+        self.call_stop_on_ctrlc = True
         
         #TODO - 
         #signal.signal(signal.SIGINT, self.stop)
@@ -185,12 +217,20 @@ class ChipShover(object):
         
         return home_resp
 
-    def validate_move(self, x, y, z):
-        pass
-
     def sweep_x_y(self, x_start, x_end, y_start, y_end, step=0.1, x_step=None, y_step=None, z_plunge=0):
-        """Sweep X-Y range, yielding at each point. Optionally perform Z-Plunge for BBI probe.
+        """Sweep X-Y range, yielding at each point.
+        
+        This function should be used in a simple sweep, for example:
 
+            for x,y in cs.sweep_x_y(0, 5, 0, 5, step=0.5):
+                print("At %f, %f"%(x,y))
+
+        If you call your fault injection probe to active at the point, you will
+        get a simple fault injection performed over a linear X-Y range.
+
+        The `z_plunge` parameter can be used to specify a certain amount of z-plunge
+        performed at each point. This is normally used with BBI or similar probes that
+        must be put in contact with the die.
         """
 
         if x_start > x_end:
@@ -227,7 +267,7 @@ class ChipShover(object):
 
 
 
-    def wait_done(self, timeout=5, debug=False, kill_on_ctrlc=True):
+    def wait_done(self, timeout=5, debug=False):
         """Wait for a command to be acknowledged by checking for 'ok' response.
         
         Some G commands return immediatly, for example G0 returns an 'ok' and
@@ -244,8 +284,8 @@ class ChipShover(object):
             timeout = timeout * 4
             timeout_cnt = 0
 
-            while True:
-                debug_data = b""
+            debug_data = b""
+            while True:                
                 resp = self.ser.readline()
 
                 if resp:
@@ -269,7 +309,7 @@ class ChipShover(object):
                     raise IOError("Device timed out, responses: %s"%str(debug_data))
 
         except KeyboardInterrupt:
-            if kill_on_ctrlc:
+            if self.call_stop_on_ctrlc:
                 print("Ctrl-C detected - calling stop() to stop table movement")
                 self.stop()
             raise
