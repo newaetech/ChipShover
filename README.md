@@ -1,6 +1,6 @@
 # ChipSHOVER®
 
-ChipSHOVER is an XYZ table &amp; driver, with handy Python interface. It's designed for close analysis of ICs using tools like Electromagnetic Fault Injection (EMFI), EM Probes for side-channel, and more. IN both specifications and cost it falls somewhere between between 3D printers & microscope stages.
+ChipSHOVER is an XYZ table &amp; driver, with handy Python interface. It's designed for close analysis of ICs using tools like Electromagnetic Fault Injection (EMFI), EM Probes for side-channel, and more. In both specifications and cost it falls somewhere between between 3D printers & microscope stages.
 
 ChipShover consists of the following main parts:
 
@@ -11,7 +11,7 @@ ChipShover consists of the following main parts:
 
 ## Physical XYZ Stage
 
-The physical XYZ stage is designed for two major variants, however you can easily customize it based on tables and parts you have on-hand. These variants are presented to avoid having 25 different versions you need to pick between. They are currently called the *medium-resolution* stage (around ~1 um resolution), and a low-resolution stage (around ~XX um resolution).
+The physical XYZ stage is designed for two major variants, however you can easily customize it based on tables and parts you have on-hand. These variants are presented to simplify your general choice of options. They are currently called the *medium-resolution* stage (around ~1 um resolution), and a low-resolution stage (around ~XX um resolution).
 
 ### Medium-Resolution Stage (~1 um)
 
@@ -21,7 +21,7 @@ If you wish to have minimum hassle, this is available in an easy-to-assemble kit
 
 ### Low-Resolution Stage
 
-The low-resolution stage uses a CNC frame fairly widely available on AliExpress and similar. With this version you must buy the stage yourself - the size and lowish cost of the stage makes it not worth carrying for NewAE!
+The low-resolution stage uses a CNC frame fairly widely available on AliExpress and similar. With this version you must buy the stage yourself - the size and lowish cost of the stage makes it not worth carrying for NewAE! The cost is significantly lower, with more hassle in the purchasing process and somewhat lower resolution and specifications on the resulting table.
 
 ## Interposers
 
@@ -46,7 +46,23 @@ The firmware is open-source and is a build of Marlin2 with a custom board type. 
 
 ## Python Interface
 
+A Python interface simplifies use from existing Jupyter notebooks and similar.
 
+Here is an example usage to sweep an IC surface from (10.0, 10.0) to (12.5, 12.5) in 0.05mm steps. Also plunge the Z-axis down to touch a probe to the surface at each location (useful when probe cannot be dragged across surface safely).
+
+*NB*: This is super-alpha, so the import will be fixed before beta version.
+
+	import chipshover
+	import chipshover.chipshover
+
+	cs = chipshover.chipshover.ChipShover('com3')
+
+	cs.home()
+
+	for x,y in cs.sweep_x_y(10, 12.5, 10, 12.5, step=0.05, z_plunge=1.5):
+	    print("At %f, %f"%(x,y))
+
+	
 
 #### Disclaimers and all that
 

@@ -60,13 +60,27 @@ class ChipShover(object):
             raise
 
 
+        self.set_fan(50)
+
         self.call_stop_on_ctrlc = True
         
         #TODO - 
         #signal.signal(signal.SIGINT, self.stop)
         
+    def set_fan(self, fan_speed=100):
+        """Sets cooling fan speed, range of 0 - 100"""
+
+        fan_pwm = (float(fan_speed) / 100.0)*255
+        fan_pwm = int(round(fan_pwm))
+        fan_pwm = min(fan_pwm, 255)
+        fan_pwm = max(fan_pwm, 0)
+
+        self.ser.write(b"M106 P1 S%d\n"%fan_pwm)
+        self.wait_done()
+
     def close(self):
         """Closes serial port"""
+        self.set_fan(0)
         self.ser.close()
         
     def stop(self):
