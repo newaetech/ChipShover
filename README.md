@@ -1,6 +1,6 @@
-# ChipSHOVER®
+# ChipShover®
 
-ChipSHOVER is an XYZ table &amp; driver, with handy Python interface. It's designed for close analysis of ICs using tools like Electromagnetic Fault Injection (EMFI), EM Probes for side-channel, and more. In both specifications and cost it falls somewhere between between 3D printers & microscope stages.
+ChipShover is an XYZ table &amp; driver, with handy Python interface. It's designed for close analysis of ICs using tools like Electromagnetic Fault Injection (EMFI), EM Probes for side-channel, and more. In both specifications and cost it falls somewhere between between 3D printers & microscope stages.
 
 ChipShover consists of the following main parts:
 
@@ -11,9 +11,9 @@ ChipShover consists of the following main parts:
 
 ## Physical XYZ Stage
 
-The physical XYZ stage is designed for two major variants, however you can easily customize it based on tables and parts you have on-hand. These variants are presented to simplify your general choice of options. They are currently called the *medium-resolution* stage (around ~1 um resolution), and a low-resolution stage (around ~XX um resolution).
+The physical XYZ stage is designed for two major variants, however you can easily customize it based on tables and parts you have on-hand. These variants are presented to simplify your general choice of options. They are currently called the *medium-resolution* stage (around <1 um resolution, in practice around 250 nm), and a low-resolution stage (around ~XX um resolution).
 
-### Medium-Resolution Stage (~1 um)
+### Medium-Resolution Stage (< 1 um)
 
 The medium-resolution stage uses a combination of standard aluminum extrusion pieces, some custom CNC made pieces, and a 'fairly good' XYZ stage sourced by NewAE. You can find alternate versions for most of the pieces and interface them with our system.
 
@@ -32,17 +32,29 @@ The XYZ stage is designed to fit a variety of tools using a 50x50mm bolt pattern
 
 These interposers can be 3D printed from files in the repo, or you can buy machined versions.
 
-## Controller
+## Controllers
 
-The designed to be compatible with 3D printer drivers based on the Arduino DUE, which uses a Microchip SAM3X (we use the similar SAM3U in many of our products already).
+The controller is based on 3D printer controllers which have extensive community resources behind their hardware and firmware. The ChipShover controller is specifically based on the Arduino DUE, which uses a Microchip SAM3X (we use the similar SAM3U in many of our products already which was our reasoning).
 
-The firmware is open-source and is a build of Marlin2 with a custom board type. The controller has several feature relevant to the ChipShover usage that are not widely available in existing 3D printer driver boards:
+The firmware is open-source and is a build of Marlin2 with a custom board type. The physical board can be either the more expensive ChipShover-One (~$1000) or the open-source [Archim2](https://ultimachine.com/products/archim2) (~$180).
+
+### ChipShover-One
+
+The ChipShover-One is our own design of a stepper controller. The controller has several feature relevant to the ChipShover usage that are not widely available in existing 3D printer driver boards:
 
 * 3 endstop inputs per axis (2 endstops, 1 higher-resolution home).
-* Swappable driver boards.
+* Swappable driver boards to work with different tables.
+* Easy user API over USB (Ethernet optional).
 * Higher drive current (~2.4A).
 * Physical E-Stop button that disconnects power to motors.
-* Colour LCD.
+* User interface including colour LCD.
+
+As there are *hundreds* of low-cost open-source stepper controllers out there, the ChipShover-One hardware is not currently released as OSHW (full design files). Schematics and other information *is* available for your use.
+
+### Archim2
+
+The Archim2 board is an open-source hardware controller board. It is [sold by UltiMachine](https://ultimachine.com/products/archim2) and can be used to make a board that is compatible with the ChipShover Python API.
+
 
 ## Python Interface
 
