@@ -27,7 +27,7 @@ The low-resolution stage uses a CNC frame fairly widely available on AliExpress 
 
 The XYZ stage is designed to fit a variety of tools using a 50x50mm bolt pattern. Currently, this has the following interposers:
 
-* ChipSHOUTER holder.
+* ChipSHOUTER® holder.
 * Pen-Style EM probe holder.
 
 These interposers can be 3D printed from files in the repo, or you can buy machined versions.
@@ -80,4 +80,4 @@ Here is an example usage to sweep an IC surface from (10.0, 10.0) to (12.5, 12.5
 
 #### Disclaimers and all that
 
-ChipShover is a registered trademark of NewAE Technology Inc.
+ChipSHOUTER and ChipShover are registered trademarks of NewAE Technology Inc.
