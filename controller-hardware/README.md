@@ -2,6 +2,8 @@
 
 ## ChipShover-One
 
+![](chipshover-one/images/beta/cs-one-open.jpeg)
+
 ChipShover-One is NewAE Technology Inc's premium control box. When people come into your lab, they will know you mean serious business. We've done things like using a joystick which cost more than the entire BOM of other lower-cost solutions, but has the right "stick feel" compared to cheaper solutions.
 
 But it's not just nice stick-feel that make this such a nice tool - with ChipShover-One you get capabilities like:

@@ -40,6 +40,8 @@ The firmware is open-source and is a [build of Marlin2 with a custom board type]
 
 ### ChipShover-One
 
+![](controller-hardware/chipshover-one/images/beta/cs-one-mainunit.jpeg)
+
 The ChipShover-One is our own stepper controller. While there are hundreds of already existing controllers out there, we figured why not make it interesting with our own take? Several feature relevant to the ChipShover usage that are not widely available in existing 3D printer driver boards were specifically added:
 
 * 3 endstop inputs per axis (2 endstops, 1 higher-resolution home).
