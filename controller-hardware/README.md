@@ -1,8 +1,11 @@
 # Stepper Controllers
 
+![](chipshover-one/images/1990-under-construction.gif)
+
 ## ChipShover-One
 
 ![](chipshover-one/images/beta/cs-one-open.jpeg)
+*Beta unit shown with 3D printed parts*
 
 ChipShover-One is NewAE Technology Inc's premium control box. When people come into your lab, they will know you mean serious business. We've done things like using a joystick which cost more than the entire BOM of other lower-cost solutions, but has the right "stick feel" compared to cheaper solutions.
 
