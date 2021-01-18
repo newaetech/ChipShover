@@ -36,7 +36,7 @@ These interposers can be 3D printed from files in the repo, or you can buy machi
 
 The controller is based on 3D printer controllers which have extensive community resources behind their hardware and firmware. The ChipShover controller is specifically based on the Arduino DUE, which uses a Microchip SAM3X (we use the similar SAM3U in many of our products already which was our reasoning).
 
-The firmware is open-source and is a build of Marlin2 with a custom board type. The board can be either the more expensive ChipShover-One (likely $1200 for enclosed & tested unit, lower-cost kit planned around ~$200) or the open-source [Archim2](https://ultimachine.com/products/archim2) (approx $180 for board + some cables needed).
+The firmware is open-source and is a build of Marlin2 with a custom board type. The board is designed to be the ChipShover-One ($1300 for enclosed & tested unit, lower-cost version planned around ~$350). Other boards such as the [Archim2](https://ultimachine.com/products/archim2) are possible with some limitations (approx $180 for board + some cables needed).
 
 ### ChipShover-One
 

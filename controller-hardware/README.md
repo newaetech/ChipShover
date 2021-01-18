@@ -2,7 +2,7 @@
 
 ## ChipShover-One
 
-ChipShover-One is NewAE Technology Inc's premium control box. When people come into your lab, they will know you mean serious business. We've done foolish things like using a joystick which cost more than the entire BOM of other lower-cost solutions, but has the right "stick feel" compared to cheaper solutions.
+ChipShover-One is NewAE Technology Inc's premium control box. When people come into your lab, they will know you mean serious business. We've done things like using a joystick which cost more than the entire BOM of other lower-cost solutions, but has the right "stick feel" compared to cheaper solutions.
 
 But it's not just nice stick-feel that make this such a nice tool - with ChipShover-One you get capabilities like:
 
@@ -13,8 +13,8 @@ But it's not just nice stick-feel that make this such a nice tool - with ChipSho
 * Colour TFT Display for feedback on position, motor driver status, etc.
 * Active cooling for stepper drivers.
 * Python 3 API Interface for usage in Jupyter notebooks.
-* Optional Ethernet interface for remote control.
 * Compact desktop size.
+* Future upgrades include Ethernet interface for remote control (hardware present but not used).
 
 Beneath the hood, we're worked hard to give you a lot of flexibility that you won't find in proprietary solutions:
 
@@ -30,7 +30,7 @@ The extension connectors allows implementation of additional features, such as a
 
 ### ChipShover-One Controller Kit
 
-$TBD (target - $1000)
+**$1300 (Estimate)**
 
 * ChipShover-One in Aluminum Enclosure
 	* 3x 2-Phase Stepper driver board (CW562) installed for X/Y/Z.
@@ -48,7 +48,7 @@ $TBD (target - $1000)
 
 ## ChipShover-Three-Quarters
 
-$TBD (target - $290)
+**$350 (Estimate)**
 
 ChipShover-Three-Quarters is a variant of ChipShover-One for people who want a lower-cost option but most of the core functionality. In order to reduce the cost, this solution does not come with the aluminum enclosure, and instead is designed to have all the boards mounted on the backside of your device (or just on a table). It requires some assembly (making cables, simple soldering, etc) and some parts (switches).
 
@@ -58,6 +58,7 @@ The main missing things:
 * No Joystick (jog buttons instead of joystick - soldering required).
 * No cooling fan.
 * No 'extension' parts on controller boards (only needed for RS485/I2C extension - not used currently anyway).
+* No power supply included (needs 24V @ 2-4A depending on your table).
 * No warranty!
 
 As you can imagine, we prioritize support and availability for the ChipShover-One as it is more helpful in NewAE running and providing updates! However we felt that having a medium-cost option was important to make it easier to any researcher to have access to the same controller, as it makes it easier for us to all share results and demos. The ChipShover-Three-Quarters *is* more than many cheap 3D printer motherboards on account of our lower volume (we test all boards extensively), but we have published details of using the ChipShover API with generic motherboards as well.
