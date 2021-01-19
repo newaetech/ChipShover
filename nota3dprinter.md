@@ -1,4 +1,4 @@
-#ChipShover is not a 3D Printer Controller
+# ChipShover is not a 3D Printer Controller
 
 ChipShover is missing some key features compared to a 3D printer motherboard:
 
