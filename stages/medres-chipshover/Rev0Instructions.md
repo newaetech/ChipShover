@@ -88,11 +88,11 @@ You will use the Cable Mounts for routing stepper motor & ChipSHOUTER cables. Th
 
 To insert them, simply insert into the slot and rotate the cable mounts:
 
-![](rev0/cablemount1.jpg)
+<img src="rev0/cablemount1.jpg" alt="Insert & Rotate" width="400">
 
 To achieve the suggested mount locations, see this figure:
 
-![](rev0/cablemount2.jpg)
+<img src="rev0/cablemount2.jpg" width="600">
 
 ### 6. Connect Stepper Cables
 
