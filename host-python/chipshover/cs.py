@@ -71,21 +71,32 @@ import binascii
 
 
 def firmware_update(comport, fw_path=None):
+    """ Flashes new firmware to the SAM3X8E.
+
+    Args:
+        comport (str): Path to serial port, ex COM4
+        fw_path (str): Path to binary firmware file. If None, flash using default firmware
+                        Defautls to None.
+    """
     sam = Samba()
     try:
         sam.con(comport)
+        print("Connected")
         sam.erase()
+        print("Erased")
         if fw_path:
             fw_data = open(fw_path, "rb").read()
         else:
             from .firmware import getsome
-            fw_data = getsome('firmware.bin')
+            fw_data = getsome('firmware.bin').read()
 
         sam.write(fw_data)
+        print("Written")
 
         if sam.verify(fw_data):
             sam.flash.setBootFlash(True)
-            sam.ser.close
+            print("Setting boot from flash")
+            sam.ser.close()
         else:
             sam.ser.close()
             raise OSError("Firmware verify FAILED!")
@@ -489,8 +500,10 @@ class ChipShover:
     def erase_firmware(self):
         """Erases the firmware of the SAM3X on the ChipShover
 
-        NOTE: There is currently no way via Python to flash
-        firmware once erased - BOSSA must be used for reprogramming.
+        Reprogram with::
+
+            from chipshover import update_firmware
+            firmware_update("comport")
         """
         print("NOTE: Currently requires BOSSA for reprogramming")
         self.ser.write(b"M997\n")

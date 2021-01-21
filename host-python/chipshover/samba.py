@@ -99,6 +99,9 @@ class Samba(object):
             flash = EefcFlash(self, "ATSAM3U2", 0x80000, 512, 256, 1, 16, 0x20001000, 0x20004000, 0x400e0800, False)
         elif chipid == 0x28090560 or chipid == 0x28190560:
             flash = EefcFlash(self, "ATSAM3U1", 0x80000, 256, 256, 1, 8, 0x20001000, 0x20002000, 0x400e0800, False)
+        elif chipid == 0x285e0a60:
+            # def __init__(self, samba, name, addr, pages, size, planes, lock_regions, user, stack, regs, can_brownout):
+            flash = EefcFlash(self, "ATSAM3X8", 0x80000, 1024, 256, 1, 8, 0x20001000, 0x20002000, 0x400e0A00, False)
         elif chipid == 0x29970ce0:
             flash = EefcFlash(self, "at91sam4sd16b", 0x400000, 2048, 512, 2, 256, 0x20001000, 0x20010000, 0x400e0a00, False);
         else:
@@ -121,6 +124,8 @@ class Samba(object):
         else:
             print("SAM3")
             cid = self.read_word(0x400e0740)
+            if cid == 0:
+                cid = self.read_word(0x400E0940)
 
         return cid
 
