@@ -61,7 +61,11 @@ Your shipment should contain the following boxes:
 
 ## 1. Place Stage Frame on Table
 
-Check the stage frame for any obvious damage. Remove packing material (foam & cardboard).
+You can remove the frame by holding the vertical framing members & pulling it up out of the box.
+
+<img src="rev0/frameremoval.jpg" width="600">
+
+Remove packing material (foam & cardboard). Check the stage frame for any obvious damage.
 
 ## 2. Mount Y Axis Stage on X Axis
 
