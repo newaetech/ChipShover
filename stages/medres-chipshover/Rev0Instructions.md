@@ -54,9 +54,11 @@ X-axis stage that should align with the Y-axis stage. Note it will "overhang" th
 1. Using the handwheel, turn the Y axis stage until all **8** bolt-holes are visible underneath the Y axis stage (4 on each side). You will need to extend it almost to it's full limit for this.
 2. Remove the 3x M6 bolts from the package.
 3. Place the Y axis stage on the X axis stage - use alignment marks to position it, and keep one hand on the stage to avoid dropping it. Note that only **3** of the holes have matching threads.
-	![](rev0/yaxisalignment.jpeg)
+
+	<img src="rev0/yaxisalignment.jpeg" width="600">
 4. Insert the M6 bolts, and using a 5mm hex driver tighten each bolt.
-	![](rev0/yaxismounted.jpeg)
+
+	<img src="rev0/yaxismounted.jpeg" width="600">
 5. Using the Y axis handwheel, return the stage back to the "home" position (you'll hear the microswitch click). 
 
 ### 3. Mount Z Plate on Y Axis
@@ -64,20 +66,23 @@ X-axis stage that should align with the Y-axis stage. Note it will "overhang" th
 1. Remove the 4x M6 bolts from the bag labelled "Z Plate to Y Axis Mounting Bolts".
 2. Remove the Z plate from the packaging, and place on the Y axis stage.
 3. Align the "Mount Z Plate" arrows, and insert the four bolts.
-	![](rev0/zplatealign.jpeg)
+
+	<img src="rev0/zplatealign.jpeg" width="600">
 4. Tighten the bolts - you'll have an ability to later fine-tune this mounting. You will want to make sure there is some clearance at the front of the Z axis mount when the Y axis is at the home position.
-	![](rev0/zplatescrew.jpeg)
+
+	<img src="rev0/zplatescrew.jpeg" width="600">
 
 ### 4. Mount Z Axis on Z Plate
 
 You will be mounting the Z axis "lower" on the Z plate to provide a reasonable working distance for the ChipSHOUTER. The following photo shows where we will be mating the provided 2x M6 bolts - note we are *not* using the upper slot.
 
-![](rev0/zplatefrontside.jpeg)
+<img src="rev0/zplatefrontside.jpeg" width="600">
 
 1. Remove the 2x M6 bolts labelled "Z Axis to Z Plate Mounting Bolts"
 2. Align the edge of the Z axis with the alignment marks on the Z plate.
 3. Insert the 2x bolts that will mate into the threaded holes on the Z plate:
-	![](rev0/zaxisfront.jpeg)
+
+	<img src="rev0/zaxisfront.jpeg" width="600">
 4. Optionally use the M6x20 bolts with the M6 locknuts.
 
 HINT: You can adjust the position of the Z axis mounting for your own use, we simply provide a suggested mount location.
