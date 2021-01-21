@@ -9,6 +9,8 @@ ChipShover consists of the following main parts:
 * Controller for XYZ stage (based on open-source Marlin firmware).
 * Python interface on computer.
 
+![](images/stages_chipshover.jpeg)
+
 ## Physical XYZ Stage
 
 The physical XYZ stage is designed for two major variants, however you can easily customize it based on tables and parts you have on-hand. These variants are presented to simplify your general choice of options. They are currently called the *medium-resolution* stage (around <1 um resolution, in practice around 250 nm), and a low-resolution stage (around ~XX um resolution).
