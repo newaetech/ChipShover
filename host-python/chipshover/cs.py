@@ -487,6 +487,11 @@ class ChipShover:
         #ok = self.ser.readline()
 
     def erase_firmware(self):
+        """Erases the firmware of the SAM3X on the ChipShover
+
+        NOTE: There is currently no way via Python to flash
+        firmware once erased - BOSSA must be used for reprogramming.
+        """
         print("NOTE: Currently requires BOSSA for reprogramming")
         self.ser.write(b"M997\n")
         print("Please power cycle chipshouter")
