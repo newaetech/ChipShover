@@ -1,3 +1,26 @@
+# /*******************************************************************************
+# * File Name: cs.py
+# *
+# * Description:
+# * The Python API for the ChipShover.
+# * 
+# * 
+# ********************************************************************************
+# * Copyright 2021 NewAE Technology Inc.
+# * SPDX-License-Identifier: Apache-2.0
+# *
+# * Licensed under the Apache License, Version 2.0 (the "License");
+# * you may not use this file except in compliance with the License.
+# * You may obtain a copy of the License at
+# *
+# *     http://www.apache.org/licenses/LICENSE-2.0
+# *
+# * Unless required by applicable law or agreed to in writing, software
+# * distributed under the License is distributed on an "AS IS" BASIS,
+# * WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+# * See the License for the specific language governing permissions and
+# * limitations under the License.
+# ********************************************************************************/
 '''
     ChipSHOVER API Documentation
     ============================
@@ -49,21 +72,26 @@ import binascii
 
 def firmware_update(comport, fw_path=None):
     sam = Samba()
-    sam.con(comport)
-    sam.erase()
-    if fw_path:
-        fw_data = open(fw_path, "rb").read()
-    else:
-        pass
+    try:
+        sam.con(comport)
+        sam.erase()
+        if fw_path:
+            fw_data = open(fw_path, "rb").read()
+        else:
+            from .firmware import getsome
+            fw_data = getsome('firmware.bin')
 
-    sam.write(fw_data)
+        sam.write(fw_data)
 
-    if sam.verify(fw_data):
-        sam.flash.setBootFlash(True)
-        sam.ser.close
-    else:
+        if sam.verify(fw_data):
+            sam.flash.setBootFlash(True)
+            sam.ser.close
+        else:
+            sam.ser.close()
+            raise OSError("Firmware verify FAILED!")
+    except:
         sam.ser.close()
-        raise OSError("Firmware verify FAILED!")
+        raise
 
 def _gen_firmware(fw_path):
     f = open("firmware.py", "w")
@@ -88,8 +116,8 @@ def _gen_firmware(fw_path):
         # json_str = base64.b64encode(e_file.read())# json.dumps(e_file.read(), ensure_ascii=False)
         json_str = binascii.b2a_base64(e_file.read())
 
-        f.write("\n#Contents from %s\n"%fw_path[1])
-        f.write("'%s':'"%fw_path[0])
+        f.write("\n#Contents from %s\n"%fw_path)
+        f.write("'%s':'"%fw_path)
         f.write(json_str.decode().replace("\n",""))
         f.write("',\n\n")
         f.flush()
@@ -457,3 +485,8 @@ class ChipShover:
         elif (pos_line[0] == 8):
             return "5V fuse blown"
         #ok = self.ser.readline()
+
+    def erase_firmware(self):
+        print("NOTE: Currently requires BOSSA for reprogramming")
+        self.ser.write(b"M997\n")
+        print("Please power cycle chipshouter")

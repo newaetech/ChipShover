@@ -111,12 +111,15 @@ class Samba(object):
         """ Read chip-id """
 
         vector = self.read_word(0x00)
+        print(vector)
 
         # If the vector is a ARM7TDMI branch, then assume Atmel SAM7 registers
         if ((vector & 0xff000000) == 0xea000000):
             cid = self.read_word(0xfffff240)
+            print("ARM7")
         # Else use the Atmel SAM3 registers
         else:
+            print("SAM3")
             cid = self.read_word(0x400e0740)
 
         return cid
