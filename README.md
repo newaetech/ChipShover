@@ -5,9 +5,11 @@ ChipShover is an XYZ table &amp; driver, with handy Python interface. It's desig
 ChipShover consists of the following main parts:
 
 * Physical XYZ Stage (based on stepper motors).
-* Interposes to mount tools onto the stage.
+* Interposers to mount tools onto the stage.
 * Controller for XYZ stage (based on open-source Marlin firmware).
 * Python interface on computer.
+
+![](images/stages_chipshover.jpeg)
 
 ## Physical XYZ Stage
 
@@ -27,7 +29,7 @@ The low-resolution stage uses a CNC frame fairly widely available on AliExpress 
 
 The XYZ stage is designed to fit a variety of tools using a 50x50mm bolt pattern. Currently, this has the following interposers:
 
-* ChipSHOUTER holder.
+* ChipSHOUTER® holder.
 * Pen-Style EM probe holder.
 
 These interposers can be 3D printed from files in the repo, or you can buy machined versions.
@@ -36,9 +38,12 @@ These interposers can be 3D printed from files in the repo, or you can buy machi
 
 The controller is based on 3D printer controllers which have extensive community resources behind their hardware and firmware. The ChipShover controller is specifically based on the Arduino DUE, which uses a Microchip SAM3X (we use the similar SAM3U in many of our products already which was our reasoning).
 
-The firmware is open-source and is a build of Marlin2 with a custom board type. The board can be either the more expensive ChipShover-One (likely $1200 for enclosed kit) or the open-source [Archim2](https://ultimachine.com/products/archim2) (approx $180 for board + some cables needed).
+The firmware is open-source and is a [build of Marlin2 with a custom board type](https://github.com/newaetech/ChipSHOVER-Marlin). The board is designed to be the ChipShover-One ($1300 for enclosed & tested unit, lower-cost version planned around ~$350). Other boards such as the [Archim2](https://ultimachine.com/products/archim2) are possible with some limitations (approx $180 for board + some cables needed).
 
 ### ChipShover-One
+
+![](controller-hardware/chipshover-one/images/beta/cs-one-mainunit.jpeg)
+*Beta unit shown with 3D printed parts*
 
 The ChipShover-One is our own stepper controller. While there are hundreds of already existing controllers out there, we figured why not make it interesting with our own take? Several feature relevant to the ChipShover usage that are not widely available in existing 3D printer driver boards were specifically added:
 
@@ -46,17 +51,17 @@ The ChipShover-One is our own stepper controller. While there are hundreds of al
 * Swappable driver boards to work with different tables.
 * Easy user API over USB (Ethernet optional).
 * Higher drive current (~2.4A).
+* Extension connectors for each axis (currently RS485 + I2C + single GPIO used for "stop" input).
 * Physical E-Stop button that disconnects power to motors.
 * User interface including colour LCD.
 
-As there are *hundreds* of low-cost open-source stepper controllers out there, the ChipShover-One hardware is not currently released as OSHW (full design files). Schematics and other information *is* available for your use.
+As there are *hundreds* of low-cost open-source stepper controllers out there, the ChipShover-One hardware is not *currently* released as full OSHW. Schematics and other information *is* available for your use already. As we finish releasing this it's likely ChipShover-One will become more open.
 
 ### Archim2
 
 The Archim2 board is an open-source hardware controller board. It is [sold by UltiMachine](https://ultimachine.com/products/archim2) and can be used to make a board that is compatible with the ChipShover Python API.
 
 The primary limitation of the Archim2 is a lower default resolution (~1um) due to the lower drive current, and only being able to use the mechanical endstops for homing. In practice this solution with an Archim2 still has many advantages compared to an off the shelf 3D printer. See more details in the [Archim2 setup folder](controller-hardware/diy-with-archim2).
-
 
 ## Python Interface
 
@@ -76,8 +81,7 @@ Here is an example usage to sweep an IC surface from (10.0, 10.0) to (12.5, 12.5
 	for x,y in cs.sweep_x_y(10, 12.5, 10, 12.5, step=0.05, z_plunge=1.5):
 	    print("At %f, %f"%(x,y))
 
-	
 
 #### Disclaimers and all that
 
-ChipShover is a registered trademark of NewAE Technology Inc.
+ChipSHOUTER and ChipShover are registered trademarks of NewAE Technology Inc.

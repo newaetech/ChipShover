@@ -5,15 +5,17 @@ The Archim2 is a popular open-source hardware driver for a 3D printer. The ChipS
 
 ## Limitations
 
-Archim2 uses the less powerful TMC2130 (1.2A RMS coil current, vs 2.0A RMS coil current on TMC2660 used in ChipShover-One). The primary effect of this is that microstepping may be more likely to lose steps, so a smaller default microstepping value is used.
+Archim2 uses the less powerful TMC2130 (1.2A RMS coil current, vs 2.0A RMS coil current on TMC2660 used in ChipShover-One). The primary effect of this is that microstepping may be more likely to lose steps, so a smaller default microstepping value is used. You can however easily adjust this default value, so it's not a hard limitation of the platform.
 
 ## Build List
+
+To build the Archim2 option, you will need:
 
 ### Archim2 Driver Option
 
 * [Archim2 with Optical End-Stops](https://ultimachine.com/products/archim2). You won't use the end stops, but need the connectors from it.
 * 3x Small Heatsinks (see note below).
-* 1x 24V, 40mm fan, 2-lead input.
+* 1x 24V, 40mm fan, 2-lead input (suggested: 109P0424H302)
 * 1x 3D Printed fan holder
 * 2x M4 screws (for fan)
 * 2x 4-40 or M3 screws (for fan holder)
