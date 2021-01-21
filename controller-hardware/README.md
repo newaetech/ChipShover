@@ -73,7 +73,7 @@ We felt that having a medium-cost option was important to make it easier to any 
 * Physical pause/stop button to abort moves *without* killing motor power (device maintains position).
 * Colour TFT Display for feedback on position, motor driver status, etc.
 * Python 3 API Interface for usage in Jupyter notebooks.
-* LED status indicators of driver end-stop state.
+* LED status indicators of end-stop states (quick troubleshooting!).
 
 The ChipShover-Three-Quarters *is* more than many cheap 3D printer motherboards on account of our lower volume (we test all boards extensively) & the specific features added to be helpful for our ChipShoving use-case.
 
