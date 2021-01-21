@@ -1,0 +1,18 @@
+# .readthedocs.yml
+
+version: 2
+
+sphinx:
+  builder: html
+  configuration: host-python/docs/conf.py
+  fail_on_warning: true
+
+
+build:
+  image: stable
+
+python:
+  version: 3.6
+  install:
+    - method: setuptools
+      path: host-python/
