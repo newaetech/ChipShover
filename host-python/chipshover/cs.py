@@ -1,17 +1,114 @@
+'''
+    ChipSHOVER API Documentation
+    ============================
+
+    For typical usage, after starting the ChipShover, you should 
+    first home the stepper motors. This serves as a calibration step:
+
+    Example
+    -------
+
+    >>> from chipshover import ChipShover
+    >>> shv = ChipShover('COM5')
+    >>> shv.home()
+
+    From there, you can use the API to set the ChipShover's position:
+
+    >>> shv.move(10, 20, 190) # x=10, y=20, z=190
+
+    Note that the Z-axis default position is typically 200 to start with.
+
+    The ChipShover can also be swept along the XY axis:
+
+    >>> for x,y in shv.sweep_x_y(0, 5, 0, 5, step=0.5):
+
+    While using the ChipShover, it may become necessary to pause
+    or stop the ChipShover. This can be done by either the stop
+    or kill command. With the former, the ChipShover can
+    continue on as usual after the stoppage; however, the latter
+    will stop the ChipShover until it is power cycled.
+
+    >>> shv.stop() # can continue on from here with new movement commands
+    >>> shv.kill() # require a power cycle to continue operation
+
+    Note that if a stop command is used, the ChipShover's measured position
+    may become incorrect. As such, it is recommended that a homing
+    command be performed after a stop is issued. In practice, the position
+    seems to still be fairly accurate after a stop and so this is only
+    recommended and not required.
+
+'''
 import serial
 import time
-#import signal
+from .samba import Samba
+import os
+import base64
+import datetime
+import binascii
 
-class ChipShover(object):
+
+def firmware_update(comport, fw_path=None):
+    sam = Samba()
+    sam.con(comport)
+    sam.erase()
+    if fw_path:
+        fw_data = open(fw_path, "rb").read()
+    else:
+        pass
+
+    sam.write(fw_data)
+
+    if sam.verify(fw_data):
+        sam.flash.setBootFlash(True)
+        sam.ser.close
+    else:
+        sam.ser.close()
+        raise OSError("Firmware verify FAILED!")
+
+def _gen_firmware(fw_path):
+    f = open("firmware.py", "w")
+
+    f.write("# This file was auto-generated. Do not manually edit or save. What are you doing looking at it? Close it now!\n")
+    f.write("# Generated on %s\n"%datetime.datetime.now())
+    f.write("#\n")
+    f.write("import binascii\n")
+    f.write("import io\n\n")
+    f.write("fwver = [%d, %d]\n" % (0, 1))
+    f.write("def getsome(item, filelike=True):\n")
+    f.write("    data = _contents[item].encode('latin-1')\n")
+    f.write("    data = binascii.a2b_base64(data)\n")
+    f.write("    if filelike:\n")
+    f.write("        data = io.BytesIO(data)\n")
+    f.write("    return data\n\n")
+    f.write("_contents = {\n")
+
+    f.write("")
+
+    with open(fw_path, "rb") as e_file:
+        # json_str = base64.b64encode(e_file.read())# json.dumps(e_file.read(), ensure_ascii=False)
+        json_str = binascii.b2a_base64(e_file.read())
+
+        f.write("\n#Contents from %s\n"%fw_path[1])
+        f.write("'%s':'"%fw_path[0])
+        f.write(json_str.decode().replace("\n",""))
+        f.write("',\n\n")
+        f.flush()
+    f.write("}\n")
+    pass
+
+class ChipShover:
     """ChipShover is a controller for XY(Z) tables. Assumes Marlin-based
-       firmware for commands."""
+       firmware for commands.
+       
+       
+    """
     
     #Default ChipShover table/firmware combo
     STEPS_PER_MM = 1600
     
     def __init__(self, comport):
         """Connect to ChipShover-Controller using given serial port."""
-        self.ser = serial.Serial(comport)
+        self.ser = serial.Serial(comport, rtscts=True)
         
         #Required for Archim2 USB serial
         self.ser.rtscts = True
@@ -337,3 +434,26 @@ class ChipShover(object):
             raise
              
         return debug_data
+
+    def status(self):
+        """ Gets the status of the ChipShouter
+
+        This function CANNOT tell whether a fuse
+        or emergency stop event has happened.
+
+        Statuses:
+            1. Idle
+            2. Unhomed
+            3. 5V fuse blown
+        """
+        self.ser.write(b"M14400\n")
+        pos_line = self.ser.readline()
+        if not pos_line:
+            return None
+        if (pos_line[0] == 0):
+            return "Idle"
+        elif (pos_line[0] == 2):
+            return "Unhomed"
+        elif (pos_line[0] == 8):
+            return "5V fuse blown"
+        #ok = self.ser.readline()

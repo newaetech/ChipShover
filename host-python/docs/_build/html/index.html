@@ -41,20 +41,56 @@ for quick positioning and other control.</p>
 ChipSHOVER from a programming language.</p>
 <div class="toctree-wrapper compound">
 </div>
-<span class="target" id="module-chipshover"></span><dl class="py class">
-<dt id="chipshover.ChipShover">
-<em class="property">class </em><code class="sig-prename descclassname">chipshover.</code><code class="sig-name descname">ChipShover</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">comport</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/chipshover/cs.html#ChipShover"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#chipshover.ChipShover" title="Permalink to this definition">¶</a></dt>
+<span class="target" id="module-chipshover.cs"></span><div class="section" id="chipshover-api-documentation">
+<h2>ChipSHOVER API Documentation<a class="headerlink" href="#chipshover-api-documentation" title="Permalink to this headline">¶</a></h2>
+<p>For typical usage, after starting the ChipShover, you should 
+first home the stepper motors. This serves as a calibration step:</p>
+<div class="section" id="example">
+<h3>Example<a class="headerlink" href="#example" title="Permalink to this headline">¶</a></h3>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="kn">from</span> <span class="nn">chipshover</span> <span class="kn">import</span> <span class="n">ChipShover</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">shv</span> <span class="o">=</span> <span class="n">ChipShover</span><span class="p">(</span><span class="s1">&#39;COM5&#39;</span><span class="p">)</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">shv</span><span class="o">.</span><span class="n">home</span><span class="p">()</span>
+</pre></div>
+</div>
+<p>From there, you can use the API to set the ChipShover’s position:</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">shv</span><span class="o">.</span><span class="n">move</span><span class="p">(</span><span class="mi">10</span><span class="p">,</span> <span class="mi">20</span><span class="p">,</span> <span class="mi">190</span><span class="p">)</span> <span class="c1"># x=10, y=20, z=190</span>
+</pre></div>
+</div>
+<p>Note that the Z-axis default position is typically 200 to start with.</p>
+<p>The ChipShover can also be swept along the XY axis:</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="k">for</span> <span class="n">x</span><span class="p">,</span><span class="n">y</span> <span class="ow">in</span> <span class="n">shv</span><span class="o">.</span><span class="n">sweep_x_y</span><span class="p">(</span><span class="mi">0</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="mi">0</span><span class="p">,</span> <span class="mi">5</span><span class="p">,</span> <span class="n">step</span><span class="o">=</span><span class="mf">0.5</span><span class="p">):</span>
+</pre></div>
+</div>
+<p>While using the ChipShover, it may become necessary to pause
+or stop the ChipShover. This can be done by either the stop
+or kill command. With the former, the ChipShover can
+continue on as usual after the stoppage; however, the latter
+will stop the ChipShover until it is power cycled.</p>
+<div class="doctest highlight-default notranslate"><div class="highlight"><pre><span></span><span class="gp">&gt;&gt;&gt; </span><span class="n">shv</span><span class="o">.</span><span class="n">stop</span><span class="p">()</span> <span class="c1"># can continue on from here with new movement commands</span>
+<span class="gp">&gt;&gt;&gt; </span><span class="n">shv</span><span class="o">.</span><span class="n">kill</span><span class="p">()</span> <span class="c1"># require a power cycle to continue operation</span>
+</pre></div>
+</div>
+<p>Note that if a stop command is used, the ChipShover’s measured position
+may become incorrect. As such, it is recommended that a homing
+command be performed after a stop is issued. In practice, the position
+seems to still be fairly accurate after a stop and so this is only
+recommended and not required.</p>
+</div>
+</div>
+<dl class="py class">
+<dt id="chipshover.cs.ChipShover">
+<em class="property">class </em><code class="sig-prename descclassname">chipshover.cs.</code><code class="sig-name descname">ChipShover</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">comport</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/chipshover/cs.html#ChipShover"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#chipshover.cs.ChipShover" title="Permalink to this definition">¶</a></dt>
 <dd><p>ChipShover is a controller for XY(Z) tables. Assumes Marlin-based
 firmware for commands.</p>
 <dl class="py method">
-<dt id="chipshover.ChipShover.close">
-<code class="sig-name descname">close</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/chipshover/cs.html#ChipShover.close"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#chipshover.ChipShover.close" title="Permalink to this definition">¶</a></dt>
+<dt id="chipshover.cs.ChipShover.close">
+<code class="sig-name descname">close</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/chipshover/cs.html#ChipShover.close"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#chipshover.cs.ChipShover.close" title="Permalink to this definition">¶</a></dt>
 <dd><p>Closes serial port</p>
 </dd></dl>
 
 <dl class="py method">
-<dt id="chipshover.ChipShover.get_position">
-<code class="sig-name descname">get_position</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">forcefinish</span><span class="o">=</span><span class="default_value">True</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/chipshover/cs.html#ChipShover.get_position"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#chipshover.ChipShover.get_position" title="Permalink to this definition">¶</a></dt>
+<dt id="chipshover.cs.ChipShover.get_position">
+<code class="sig-name descname">get_position</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">forcefinish</span><span class="o">=</span><span class="default_value">True</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/chipshover/cs.html#ChipShover.get_position"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#chipshover.cs.ChipShover.get_position" title="Permalink to this definition">¶</a></dt>
 <dd><p>Gets the X/Y/Z position of the table.</p>
 <p>By default will wait for any movement to
 finish, as reading position during movement
@@ -63,8 +99,8 @@ position.</p>
 </dd></dl>
 
 <dl class="py method">
-<dt id="chipshover.ChipShover.home">
-<code class="sig-name descname">home</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">x</span><span class="o">=</span><span class="default_value">True</span></em>, <em class="sig-param"><span class="n">y</span><span class="o">=</span><span class="default_value">True</span></em>, <em class="sig-param"><span class="n">z</span><span class="o">=</span><span class="default_value">True</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/chipshover/cs.html#ChipShover.home"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#chipshover.ChipShover.home" title="Permalink to this definition">¶</a></dt>
+<dt id="chipshover.cs.ChipShover.home">
+<code class="sig-name descname">home</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">x</span><span class="o">=</span><span class="default_value">True</span></em>, <em class="sig-param"><span class="n">y</span><span class="o">=</span><span class="default_value">True</span></em>, <em class="sig-param"><span class="n">z</span><span class="o">=</span><span class="default_value">True</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/chipshover/cs.html#ChipShover.home"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#chipshover.cs.ChipShover.home" title="Permalink to this definition">¶</a></dt>
 <dd><p>Perform homing operation using G28 command.</p>
 <p>Calling this will home the X, Y, and Z axis (you can
 disable specific axis as well). The command will block
@@ -72,8 +108,8 @@ until the homing operation is complete.</p>
 </dd></dl>
 
 <dl class="py method">
-<dt id="chipshover.ChipShover.kill">
-<code class="sig-name descname">kill</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/chipshover/cs.html#ChipShover.kill"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#chipshover.ChipShover.kill" title="Permalink to this definition">¶</a></dt>
+<dt id="chipshover.cs.ChipShover.kill">
+<code class="sig-name descname">kill</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/chipshover/cs.html#ChipShover.kill"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#chipshover.cs.ChipShover.kill" title="Permalink to this definition">¶</a></dt>
 <dd><p>Calls KILL command (M112) to stop all movement.</p>
 <p>This will stop all table movement and shut down the
 controller, requiring a power cycle to recover. Useful
@@ -82,8 +118,8 @@ ensure someone physically clears.</p>
 </dd></dl>
 
 <dl class="py method">
-<dt id="chipshover.ChipShover.move">
-<code class="sig-name descname">move</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">x</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">y</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">z</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">debug</span><span class="o">=</span><span class="default_value">False</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/chipshover/cs.html#ChipShover.move"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#chipshover.ChipShover.move" title="Permalink to this definition">¶</a></dt>
+<dt id="chipshover.cs.ChipShover.move">
+<code class="sig-name descname">move</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">x</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">y</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">z</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">debug</span><span class="o">=</span><span class="default_value">False</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/chipshover/cs.html#ChipShover.move"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#chipshover.cs.ChipShover.move" title="Permalink to this definition">¶</a></dt>
 <dd><p>Move table to commanded X, Y, Z location.</p>
 <p>Uses a <cite>G0</cite> command to move the table. The function
 will use a <cite>M400</cite> command to wait for the movement
@@ -91,8 +127,8 @@ to complete before returning.</p>
 </dd></dl>
 
 <dl class="py method">
-<dt id="chipshover.ChipShover.move_zdepth">
-<code class="sig-name descname">move_zdepth</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">z_depth</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/chipshover/cs.html#ChipShover.move_zdepth"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#chipshover.ChipShover.move_zdepth" title="Permalink to this definition">¶</a></dt>
+<dt id="chipshover.cs.ChipShover.move_zdepth">
+<code class="sig-name descname">move_zdepth</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">z_depth</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/chipshover/cs.html#ChipShover.move_zdepth"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#chipshover.cs.ChipShover.move_zdepth" title="Permalink to this definition">¶</a></dt>
 <dd><p>Sets the Z axis to a given ‘depth’, as referenced from home.</p>
 <p>The default Z-Axis homing sets the Z axis to some positive value, with
 Z = 0 being the axis bottom. Most of the time you’d like to specify depth
@@ -100,22 +136,22 @@ below home position instead, this function lets you do that.</p>
 </dd></dl>
 
 <dl class="py method">
-<dt id="chipshover.ChipShover.set_fan">
-<code class="sig-name descname">set_fan</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">fan_speed</span><span class="o">=</span><span class="default_value">100</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/chipshover/cs.html#ChipShover.set_fan"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#chipshover.ChipShover.set_fan" title="Permalink to this definition">¶</a></dt>
+<dt id="chipshover.cs.ChipShover.set_fan">
+<code class="sig-name descname">set_fan</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">fan_speed</span><span class="o">=</span><span class="default_value">100</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/chipshover/cs.html#ChipShover.set_fan"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#chipshover.cs.ChipShover.set_fan" title="Permalink to this definition">¶</a></dt>
 <dd><p>Sets cooling fan speed, range of 0 - 100</p>
 </dd></dl>
 
 <dl class="py method">
-<dt id="chipshover.ChipShover.stop">
-<code class="sig-name descname">stop</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/chipshover/cs.html#ChipShover.stop"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#chipshover.ChipShover.stop" title="Permalink to this definition">¶</a></dt>
+<dt id="chipshover.cs.ChipShover.stop">
+<code class="sig-name descname">stop</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/chipshover/cs.html#ChipShover.stop"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#chipshover.cs.ChipShover.stop" title="Permalink to this definition">¶</a></dt>
 <dd><p>Calls EMERGENCY STOP command (M410).</p>
 <p>Stops movement, but allows further commands. Sending this will
 cause positionvto be wrong if table was moving at the time.</p>
 </dd></dl>
 
 <dl class="py method">
-<dt id="chipshover.ChipShover.sweep_x_y">
-<code class="sig-name descname">sweep_x_y</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">x_start</span></em>, <em class="sig-param"><span class="n">x_end</span></em>, <em class="sig-param"><span class="n">y_start</span></em>, <em class="sig-param"><span class="n">y_end</span></em>, <em class="sig-param"><span class="n">step</span><span class="o">=</span><span class="default_value">0.1</span></em>, <em class="sig-param"><span class="n">x_step</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">y_step</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">z_plunge</span><span class="o">=</span><span class="default_value">0</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/chipshover/cs.html#ChipShover.sweep_x_y"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#chipshover.ChipShover.sweep_x_y" title="Permalink to this definition">¶</a></dt>
+<dt id="chipshover.cs.ChipShover.sweep_x_y">
+<code class="sig-name descname">sweep_x_y</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">x_start</span></em>, <em class="sig-param"><span class="n">x_end</span></em>, <em class="sig-param"><span class="n">y_start</span></em>, <em class="sig-param"><span class="n">y_end</span></em>, <em class="sig-param"><span class="n">step</span><span class="o">=</span><span class="default_value">0.1</span></em>, <em class="sig-param"><span class="n">x_step</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">y_step</span><span class="o">=</span><span class="default_value">None</span></em>, <em class="sig-param"><span class="n">z_plunge</span><span class="o">=</span><span class="default_value">0</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/chipshover/cs.html#ChipShover.sweep_x_y"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#chipshover.cs.ChipShover.sweep_x_y" title="Permalink to this definition">¶</a></dt>
 <dd><p>Sweep X-Y range, yielding at each point.</p>
 <p>This function should be used in a simple sweep, for example:</p>
 <blockquote>
@@ -132,8 +168,8 @@ must be put in contact with the die.</p>
 </dd></dl>
 
 <dl class="py method">
-<dt id="chipshover.ChipShover.wait_done">
-<code class="sig-name descname">wait_done</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">timeout</span><span class="o">=</span><span class="default_value">5</span></em>, <em class="sig-param"><span class="n">debug</span><span class="o">=</span><span class="default_value">False</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/chipshover/cs.html#ChipShover.wait_done"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#chipshover.ChipShover.wait_done" title="Permalink to this definition">¶</a></dt>
+<dt id="chipshover.cs.ChipShover.wait_done">
+<code class="sig-name descname">wait_done</code><span class="sig-paren">(</span><em class="sig-param"><span class="n">timeout</span><span class="o">=</span><span class="default_value">5</span></em>, <em class="sig-param"><span class="n">debug</span><span class="o">=</span><span class="default_value">False</span></em><span class="sig-paren">)</span><a class="reference internal" href="_modules/chipshover/cs.html#ChipShover.wait_done"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#chipshover.cs.ChipShover.wait_done" title="Permalink to this definition">¶</a></dt>
 <dd><p>Wait for a command to be acknowledged by checking for ‘ok’ response.</p>
 <p>Some G commands return immediatly, for example G0 returns an ‘ok’ and
 does not wait for the command to execute. Others will block until the
@@ -145,8 +181,8 @@ ChipShover interactively and hit Ctrl-C to try and abort a move operation.</p>
 </dd></dl>
 
 <dl class="py method">
-<dt id="chipshover.ChipShover.wait_for_move">
-<code class="sig-name descname">wait_for_move</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/chipshover/cs.html#ChipShover.wait_for_move"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#chipshover.ChipShover.wait_for_move" title="Permalink to this definition">¶</a></dt>
+<dt id="chipshover.cs.ChipShover.wait_for_move">
+<code class="sig-name descname">wait_for_move</code><span class="sig-paren">(</span><span class="sig-paren">)</span><a class="reference internal" href="_modules/chipshover/cs.html#ChipShover.wait_for_move"><span class="viewcode-link">[source]</span></a><a class="headerlink" href="#chipshover.cs.ChipShover.wait_for_move" title="Permalink to this definition">¶</a></dt>
 <dd><p>Wait for current movement to be done</p>
 </dd></dl>
 

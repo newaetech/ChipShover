@@ -31,13 +31,56 @@
           <div class="body" role="main">
             
   <h1>Source code for chipshover.cs</h1><div class="highlight"><pre>
-<span></span><span class="kn">import</span> <span class="nn">serial</span>
+<span></span><span class="sd">&#39;&#39;&#39;</span>
+<span class="sd">    ChipSHOVER API Documentation</span>
+<span class="sd">    ============================</span>
+
+<span class="sd">    For typical usage, after starting the ChipShover, you should </span>
+<span class="sd">    first home the stepper motors. This serves as a calibration step:</span>
+
+<span class="sd">    Example</span>
+<span class="sd">    -------</span>
+
+<span class="sd">    &gt;&gt;&gt; from chipshover import ChipShover</span>
+<span class="sd">    &gt;&gt;&gt; shv = ChipShover(&#39;COM5&#39;)</span>
+<span class="sd">    &gt;&gt;&gt; shv.home()</span>
+
+<span class="sd">    From there, you can use the API to set the ChipShover&#39;s position:</span>
+
+<span class="sd">    &gt;&gt;&gt; shv.move(10, 20, 190) # x=10, y=20, z=190</span>
+
+<span class="sd">    Note that the Z-axis default position is typically 200 to start with.</span>
+
+<span class="sd">    The ChipShover can also be swept along the XY axis:</span>
+
+<span class="sd">    &gt;&gt;&gt; for x,y in shv.sweep_x_y(0, 5, 0, 5, step=0.5):</span>
+
+<span class="sd">    While using the ChipShover, it may become necessary to pause</span>
+<span class="sd">    or stop the ChipShover. This can be done by either the stop</span>
+<span class="sd">    or kill command. With the former, the ChipShover can</span>
+<span class="sd">    continue on as usual after the stoppage; however, the latter</span>
+<span class="sd">    will stop the ChipShover until it is power cycled.</span>
+
+<span class="sd">    &gt;&gt;&gt; shv.stop() # can continue on from here with new movement commands</span>
+<span class="sd">    &gt;&gt;&gt; shv.kill() # require a power cycle to continue operation</span>
+
+<span class="sd">    Note that if a stop command is used, the ChipShover&#39;s measured position</span>
+<span class="sd">    may become incorrect. As such, it is recommended that a homing</span>
+<span class="sd">    command be performed after a stop is issued. In practice, the position</span>
+<span class="sd">    seems to still be fairly accurate after a stop and so this is only</span>
+<span class="sd">    recommended and not required.</span>
+
+<span class="sd">&#39;&#39;&#39;</span>
+<span class="kn">import</span> <span class="nn">serial</span>
 <span class="kn">import</span> <span class="nn">time</span>
 <span class="c1">#import signal</span>
 
-<div class="viewcode-block" id="ChipShover"><a class="viewcode-back" href="../../index.html#chipshover.ChipShover">[docs]</a><span class="k">class</span> <span class="nc">ChipShover</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
+<div class="viewcode-block" id="ChipShover"><a class="viewcode-back" href="../../index.html#chipshover.cs.ChipShover">[docs]</a><span class="k">class</span> <span class="nc">ChipShover</span><span class="p">(</span><span class="nb">object</span><span class="p">):</span>
     <span class="sd">&quot;&quot;&quot;ChipShover is a controller for XY(Z) tables. Assumes Marlin-based</span>
-<span class="sd">       firmware for commands.&quot;&quot;&quot;</span>
+<span class="sd">       firmware for commands.</span>
+<span class="sd">       </span>
+<span class="sd">       </span>
+<span class="sd">    &quot;&quot;&quot;</span>
     
     <span class="c1">#Default ChipShover table/firmware combo</span>
     <span class="n">STEPS_PER_MM</span> <span class="o">=</span> <span class="mi">1600</span>
@@ -100,7 +143,7 @@
         <span class="c1">#TODO - </span>
         <span class="c1">#signal.signal(signal.SIGINT, self.stop)</span>
         
-<div class="viewcode-block" id="ChipShover.set_fan"><a class="viewcode-back" href="../../index.html#chipshover.ChipShover.set_fan">[docs]</a>    <span class="k">def</span> <span class="nf">set_fan</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">fan_speed</span><span class="o">=</span><span class="mi">100</span><span class="p">):</span>
+<div class="viewcode-block" id="ChipShover.set_fan"><a class="viewcode-back" href="../../index.html#chipshover.cs.ChipShover.set_fan">[docs]</a>    <span class="k">def</span> <span class="nf">set_fan</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">fan_speed</span><span class="o">=</span><span class="mi">100</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;Sets cooling fan speed, range of 0 - 100&quot;&quot;&quot;</span>
 
         <span class="n">fan_pwm</span> <span class="o">=</span> <span class="p">(</span><span class="nb">float</span><span class="p">(</span><span class="n">fan_speed</span><span class="p">)</span> <span class="o">/</span> <span class="mf">100.0</span><span class="p">)</span><span class="o">*</span><span class="mi">255</span>
@@ -111,12 +154,12 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">ser</span><span class="o">.</span><span class="n">write</span><span class="p">(</span><span class="sa">b</span><span class="s2">&quot;M106 P1 S</span><span class="si">%d</span><span class="se">\n</span><span class="s2">&quot;</span><span class="o">%</span><span class="n">fan_pwm</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">wait_done</span><span class="p">()</span></div>
 
-<div class="viewcode-block" id="ChipShover.close"><a class="viewcode-back" href="../../index.html#chipshover.ChipShover.close">[docs]</a>    <span class="k">def</span> <span class="nf">close</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<div class="viewcode-block" id="ChipShover.close"><a class="viewcode-back" href="../../index.html#chipshover.cs.ChipShover.close">[docs]</a>    <span class="k">def</span> <span class="nf">close</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;Closes serial port&quot;&quot;&quot;</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">set_fan</span><span class="p">(</span><span class="mi">0</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">ser</span><span class="o">.</span><span class="n">close</span><span class="p">()</span></div>
         
-<div class="viewcode-block" id="ChipShover.stop"><a class="viewcode-back" href="../../index.html#chipshover.ChipShover.stop">[docs]</a>    <span class="k">def</span> <span class="nf">stop</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<div class="viewcode-block" id="ChipShover.stop"><a class="viewcode-back" href="../../index.html#chipshover.cs.ChipShover.stop">[docs]</a>    <span class="k">def</span> <span class="nf">stop</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;Calls EMERGENCY STOP command (M410).</span>
 <span class="sd">        </span>
 <span class="sd">        Stops movement, but allows further commands. Sending this will</span>
@@ -125,7 +168,7 @@
         <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;**STOP CALLED. Motor positions will be incorrect. Please re-home.&quot;</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">wait_done</span><span class="p">()</span></div>
         
-<div class="viewcode-block" id="ChipShover.kill"><a class="viewcode-back" href="../../index.html#chipshover.ChipShover.kill">[docs]</a>    <span class="k">def</span> <span class="nf">kill</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<div class="viewcode-block" id="ChipShover.kill"><a class="viewcode-back" href="../../index.html#chipshover.cs.ChipShover.kill">[docs]</a>    <span class="k">def</span> <span class="nf">kill</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;Calls KILL command (M112) to stop all movement.</span>
 <span class="sd">        </span>
 <span class="sd">        This will stop all table movement and shut down the</span>
@@ -137,7 +180,7 @@
         <span class="nb">print</span><span class="p">(</span><span class="s2">&quot;***KILL CALLED. Power Cycle Needed!***&quot;</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">wait_done</span><span class="p">()</span></div>
         
-<div class="viewcode-block" id="ChipShover.move_zdepth"><a class="viewcode-back" href="../../index.html#chipshover.ChipShover.move_zdepth">[docs]</a>    <span class="k">def</span> <span class="nf">move_zdepth</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">z_depth</span><span class="p">):</span>
+<div class="viewcode-block" id="ChipShover.move_zdepth"><a class="viewcode-back" href="../../index.html#chipshover.cs.ChipShover.move_zdepth">[docs]</a>    <span class="k">def</span> <span class="nf">move_zdepth</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">z_depth</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;Sets the Z axis to a given &#39;depth&#39;, as referenced from home.</span>
 <span class="sd">        </span>
 <span class="sd">        The default Z-Axis homing sets the Z axis to some positive value, with</span>
@@ -149,7 +192,7 @@
             <span class="k">raise</span> <span class="ne">ValueError</span><span class="p">(</span><span class="s2">&quot;Run Homing First&quot;</span><span class="p">)</span>
         <span class="bp">self</span><span class="o">.</span><span class="n">move</span><span class="p">(</span><span class="n">z</span><span class="o">=</span> <span class="bp">self</span><span class="o">.</span><span class="n">z_home</span> <span class="o">-</span> <span class="n">z_depth</span><span class="p">)</span></div>
         
-<div class="viewcode-block" id="ChipShover.move"><a class="viewcode-back" href="../../index.html#chipshover.ChipShover.move">[docs]</a>    <span class="k">def</span> <span class="nf">move</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">x</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">z</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">debug</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
+<div class="viewcode-block" id="ChipShover.move"><a class="viewcode-back" href="../../index.html#chipshover.cs.ChipShover.move">[docs]</a>    <span class="k">def</span> <span class="nf">move</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">x</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">z</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">debug</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;Move table to commanded X, Y, Z location.</span>
 <span class="sd">        </span>
 <span class="sd">        Uses a `G0` command to move the table. The function</span>
@@ -176,7 +219,7 @@
 
         <span class="bp">self</span><span class="o">.</span><span class="n">wait_for_move</span><span class="p">()</span></div>
         
-<div class="viewcode-block" id="ChipShover.wait_for_move"><a class="viewcode-back" href="../../index.html#chipshover.ChipShover.wait_for_move">[docs]</a>    <span class="k">def</span> <span class="nf">wait_for_move</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
+<div class="viewcode-block" id="ChipShover.wait_for_move"><a class="viewcode-back" href="../../index.html#chipshover.cs.ChipShover.wait_for_move">[docs]</a>    <span class="k">def</span> <span class="nf">wait_for_move</span><span class="p">(</span><span class="bp">self</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;Wait for current movement to be done&quot;&quot;&quot;</span>
 
         <span class="bp">self</span><span class="o">.</span><span class="n">ser</span><span class="o">.</span><span class="n">flush</span><span class="p">()</span>
@@ -186,7 +229,7 @@
         <span class="bp">self</span><span class="o">.</span><span class="n">wait_done</span><span class="p">()</span></div>
 
 
-<div class="viewcode-block" id="ChipShover.get_position"><a class="viewcode-back" href="../../index.html#chipshover.ChipShover.get_position">[docs]</a>    <span class="k">def</span> <span class="nf">get_position</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">forcefinish</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
+<div class="viewcode-block" id="ChipShover.get_position"><a class="viewcode-back" href="../../index.html#chipshover.cs.ChipShover.get_position">[docs]</a>    <span class="k">def</span> <span class="nf">get_position</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">forcefinish</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;Gets the X/Y/Z position of the table.</span>
 <span class="sd">        </span>
 <span class="sd">        By default will wait for any movement to</span>
@@ -243,7 +286,7 @@
             
         <span class="k">return</span> <span class="n">calc_x_mm</span><span class="p">,</span> <span class="n">calc_y_mm</span><span class="p">,</span> <span class="n">calc_z_mm</span></div>
         
-<div class="viewcode-block" id="ChipShover.home"><a class="viewcode-back" href="../../index.html#chipshover.ChipShover.home">[docs]</a>    <span class="k">def</span> <span class="nf">home</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">x</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">z</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
+<div class="viewcode-block" id="ChipShover.home"><a class="viewcode-back" href="../../index.html#chipshover.cs.ChipShover.home">[docs]</a>    <span class="k">def</span> <span class="nf">home</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">x</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">y</span><span class="o">=</span><span class="kc">True</span><span class="p">,</span> <span class="n">z</span><span class="o">=</span><span class="kc">True</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;Perform homing operation using G28 command.</span>
 <span class="sd">        </span>
 <span class="sd">        Calling this will home the X, Y, and Z axis (you can</span>
@@ -272,7 +315,7 @@
         
         <span class="k">return</span> <span class="n">home_resp</span></div>
 
-<div class="viewcode-block" id="ChipShover.sweep_x_y"><a class="viewcode-back" href="../../index.html#chipshover.ChipShover.sweep_x_y">[docs]</a>    <span class="k">def</span> <span class="nf">sweep_x_y</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">x_start</span><span class="p">,</span> <span class="n">x_end</span><span class="p">,</span> <span class="n">y_start</span><span class="p">,</span> <span class="n">y_end</span><span class="p">,</span> <span class="n">step</span><span class="o">=</span><span class="mf">0.1</span><span class="p">,</span> <span class="n">x_step</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">y_step</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">z_plunge</span><span class="o">=</span><span class="mi">0</span><span class="p">):</span>
+<div class="viewcode-block" id="ChipShover.sweep_x_y"><a class="viewcode-back" href="../../index.html#chipshover.cs.ChipShover.sweep_x_y">[docs]</a>    <span class="k">def</span> <span class="nf">sweep_x_y</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">x_start</span><span class="p">,</span> <span class="n">x_end</span><span class="p">,</span> <span class="n">y_start</span><span class="p">,</span> <span class="n">y_end</span><span class="p">,</span> <span class="n">step</span><span class="o">=</span><span class="mf">0.1</span><span class="p">,</span> <span class="n">x_step</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">y_step</span><span class="o">=</span><span class="kc">None</span><span class="p">,</span> <span class="n">z_plunge</span><span class="o">=</span><span class="mi">0</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;Sweep X-Y range, yielding at each point.</span>
 <span class="sd">        </span>
 <span class="sd">        This function should be used in a simple sweep, for example:</span>
@@ -322,7 +365,7 @@
 
 
 
-<div class="viewcode-block" id="ChipShover.wait_done"><a class="viewcode-back" href="../../index.html#chipshover.ChipShover.wait_done">[docs]</a>    <span class="k">def</span> <span class="nf">wait_done</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">timeout</span><span class="o">=</span><span class="mi">5</span><span class="p">,</span> <span class="n">debug</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
+<div class="viewcode-block" id="ChipShover.wait_done"><a class="viewcode-back" href="../../index.html#chipshover.cs.ChipShover.wait_done">[docs]</a>    <span class="k">def</span> <span class="nf">wait_done</span><span class="p">(</span><span class="bp">self</span><span class="p">,</span> <span class="n">timeout</span><span class="o">=</span><span class="mi">5</span><span class="p">,</span> <span class="n">debug</span><span class="o">=</span><span class="kc">False</span><span class="p">):</span>
         <span class="sd">&quot;&quot;&quot;Wait for a command to be acknowledged by checking for &#39;ok&#39; response.</span>
 <span class="sd">        </span>
 <span class="sd">        Some G commands return immediatly, for example G0 returns an &#39;ok&#39; and</span>

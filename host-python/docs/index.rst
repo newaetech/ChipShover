@@ -18,7 +18,7 @@ ChipSHOVER from a programming language.
 .. toctree::
    :maxdepth: 2
 
-.. automodule:: chipshover
+.. automodule:: chipshover.cs
 
 .. autoclass:: ChipShover
     :members:
