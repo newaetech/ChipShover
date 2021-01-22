@@ -97,6 +97,7 @@ def firmware_update(comport, fw_path=None):
             sam.flash.setBootFlash(True)
             print("Setting boot from flash")
             sam.ser.close()
+            print("Firmware update succeeded: PLEASE POWER CYCLE CHIPSHOVER")
         else:
             sam.ser.close()
             raise OSError("Firmware verify FAILED!")
@@ -104,7 +105,7 @@ def firmware_update(comport, fw_path=None):
         sam.ser.close()
         raise
 
-def _gen_firmware(fw_path):
+def _gen_firmware(fw_path=None):
     f = open("firmware.py", "w")
 
     f.write("# This file was auto-generated. Do not manually edit or save. What are you doing looking at it? Close it now!\n")
@@ -122,13 +123,15 @@ def _gen_firmware(fw_path):
     f.write("_contents = {\n")
 
     f.write("")
+    if fw_path is None:
+        fw_path = '../../../ChipSHOVER-Marlin/.pio/build/DUE_chipshover/firmware.bin'
 
     with open(fw_path, "rb") as e_file:
         # json_str = base64.b64encode(e_file.read())# json.dumps(e_file.read(), ensure_ascii=False)
         json_str = binascii.b2a_base64(e_file.read())
 
         f.write("\n#Contents from %s\n"%fw_path)
-        f.write("'%s':'"%fw_path)
+        f.write("'%s':'"%'firmware.bin')
         f.write(json_str.decode().replace("\n",""))
         f.write("',\n\n")
         f.flush()
@@ -148,6 +151,7 @@ class ChipShover:
     def __init__(self, comport):
         """Connect to ChipShover-Controller using given serial port."""
         self.ser = serial.Serial(comport, rtscts=True)
+        self._com = comport
         
         #Required for Archim2 USB serial
         self.ser.rtscts = True
@@ -505,6 +509,30 @@ class ChipShover:
             from chipshover import update_firmware
             firmware_update("comport")
         """
-        print("NOTE: Currently requires BOSSA for reprogramming")
         self.ser.write(b"M997\n")
-        print("Please power cycle chipshouter")
+
+    def auto_program(self, fw_path=None):
+        """Erase and reprogram the chipshover
+
+        Args:
+            fw_path (str): Path to firmware. If none, use default firmware.
+                            Defaults to None.
+
+        If com port detection fails, reprogramming must be done with firmware_update()
+        """
+        import time, serial.tools.list_ports
+        before = serial.tools.list_ports.comports()
+        before = [b.device for b in before]
+        time.sleep(0.5)
+        self.ser.write(b"M997\n")
+        time.sleep(5.5)
+        after = serial.tools.list_ports.comports()
+        after = [a.device for a in after]
+        candidate = list(set(before) ^ set(after) ^ set([self._com]))
+        # print(candidate)
+        # print(before, after, self._com)
+        if len(candidate) == 0:
+            raise OSError("Could not detect COMPORT. Continue using programmer.program()")
+        com = candidate[0]
+        print("Detected com port {}".format(com))
+        firmware_update(com, fw_path)
