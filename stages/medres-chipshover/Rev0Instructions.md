@@ -1,129 +1,126 @@
 # Medium Res Stage - Rev 0
 
+REV0 is a beta release of the ChipShover platform. This release includes:
+
+* Temporary printed labels instead of final labels
+* 3D printed parts
+
 ## Stage Assembly & Setup
 
-## Parts
+See the [Rev0Assembly.md](Rev0Assembly.md "Rev 0 Assembly Document") for details of the assembly process.
 
-**Box 1: Frame with X Axis Stage**
+You should roughly have the following after that page:
 
-* Frame
-
-**Box 2: Y and Z Axis Stages**
-
-* Y axis stage
-* Y axis stage mounting bolts
-* Z axis stage
-* Z axis stage mounting bolts
-
-**Box 3: ChipShover Controller with Cables**
-
-* ChipShover Controller
-* 24V/5A power supply
-* AC power cord
-* X axis stepper cable (1m)
-* Y axis stepper cable (1m)
-* Z axis stepper cable (1m)
-
-**Box 4: Nut Drivers, Accessories, and Z Plate***
-
-* 5mm ball-end T-Handle driver
-* 3/16" ball-end T-Handle driver
-* 
-
-**Box 4-B: ChipSHOUTER Mounting Plate**
-
-* ChipSHOUTER mounting adapter
-* 4x M6 screws (countersunk)
-* 4mm ball-end hex T-handle driver
-* 4mm ball-end hex key
-
-**Box 5: Extra-Long Drivers**
-* 3/16" ball-end T-Handle driver, XX long
-* 5/8" ball-end T-Handle driver, XX long
-
-
-### 1. Place Stage Frame on Table
-
-Check the stage frame for any obvious damage. Remove packing material (foam & cardboard).
-
-### 2. Mount Y Axis Stage on X Axis
-
-Mount the Y Axis stage perpendicular to the X axis stage. You will see alignment labels on the
-X-axis stage that should align with the Y-axis stage. Note it will "overhang" the X axis stage to provide sufficient Y axis travel. The steps to perform the mounting are:
-
-1. Using the handwheel, turn the Y axis stage until all **8** bolt-holes are visible underneath the Y axis stage (4 on each side). You will need to extend it almost to it's full limit for this.
-2. Remove the 3x M6 bolts from the package.
-3. Place the Y axis stage on the X axis stage - use alignment marks to position it, and keep one hand on the stage to avoid dropping it. Note that only **3** of the holes have matching threads.
-
-	<img src="rev0/yaxisalignment.jpeg" width="600">
-4. Insert the M6 bolts, and using a 5mm hex driver tighten each bolt.
-
-	<img src="rev0/yaxismounted.jpeg" width="600">
-5. Using the Y axis handwheel, return the stage back to the "home" position (you'll hear the microswitch click). 
-
-### 3. Mount Z Plate on Y Axis
-
-1. Remove the 4x M6 bolts from the bag labelled "Z Plate to Y Axis Mounting Bolts".
-2. Remove the Z plate from the packaging, and place on the Y axis stage.
-3. Align the "Mount Z Plate" arrows, and insert the four bolts.
-
-	<img src="rev0/zplatealign.jpeg" width="600">
-4. Tighten the bolts - you'll have an ability to later fine-tune this mounting. You will want to make sure there is some clearance at the front of the Z axis mount when the Y axis is at the home position.
-
-	<img src="rev0/zplatescrew.jpeg" width="600">
-
-### 4. Mount Z Axis on Z Plate
-
-You will be mounting the Z axis "lower" on the Z plate to provide a reasonable working distance for the ChipSHOUTER. The following photo shows where we will be mating the provided 2x M6 bolts - note we are *not* using the upper slot.
-
-<img src="rev0/zplatefrontside.jpeg" width="600">
-
-1. Remove the 2x M6 bolts labelled "Z Axis to Z Plate Mounting Bolts"
-2. Align the edge of the Z axis with the alignment marks on the Z plate.
-3. Insert the 2x bolts that will mate into the threaded holes on the Z plate:
-
-	<img src="rev0/zaxisfront.jpeg" width="600">
-4. Optionally use the M6x20 bolts with the M6 locknuts.
-
-HINT: You can adjust the position of the Z axis mounting for your own use, we simply provide a suggested mount location.
-
-### 5. Add Cable Mounts
-
-You will use the Cable Mounts for routing stepper motor & ChipSHOUTER cables. The suggested uses is as shown here:
-
-To insert them, simply insert into the slot and rotate the cable mounts:
-
-<img src="rev0/cablemount1.jpg" alt="Insert & Rotate" width="400">
-
-To achieve the suggested mount locations, see this figure:
-
-<img src="rev0/cablemount2.jpg" width="600">
-
-### 6. Connect Stepper Cables
-
-The stepper motor cables are all standard DB-9 straight-through cables. The provided cables are 22AWG cables allowing a more powerful drive, although we have tested with standard 26AWG IDC cables successfully. Thus if you require extensions or replacements, and off the shelf cable should work.
-
-Due to the spacing at the ChipShover controller
-
-The X/Y/Z/ axis cables have been labelled to make setup quicker. To connect them:
-
-1. Connect each cable to the DB9 connector on each stage. The Z axis connector is straight up and the cable should be routed to a cable mount.
-2. Connect the other end of each cable to the ChipShover controller.
-3. Use the provided 1/4" long 4-40 bolts to screw the cables into the ChipShover.
-
-### 7. Add ChipSHOUTER Mounting Bracket
-
-### 8. Mount ChipSHOUTER
+<img src="rev0/stages_chipshover.jpeg" width="600">
 
 ## Adjusting Coarse Position
 
+You will have to adjust the position of the ChipShover XYZ stages in a "coarse" fashion to get the ChipShover 50mm travel range to be within the area of your interest. 
+
+To simplify the adjustment, you have been provided with two **extra-long** T-handle socket-end hex wrenches. One is 3/16", and one is 5/32".
+
+<img src="rev0/longcat.jpeg" width="600">
+
+The ChipShover table uses a "main adjustment bolt" that locks everything together - this bolt is the upper left bolt on the X-Axis table holder. Whenever you are moving the table either in Y or X you will have to loosen this bolt. Once you have finished the adjustment, tighten this bolt to ensure no other bolts loosen:
+
+<img src="rev0/jesusbolt.jpeg" width="600">
+
+**NOTE: For all adjustments you should LOOSEN but not REMOVE any bolts. If you fully remove any bolt, be sure to thread them back before continuing.**
+
 ### Y Adjustment
+
+
+1. Loosen the main adjustment bolt:
+
+	<img src="rev0/jesusbolt.jpeg" width="600">
+
+2. Loosen the **four** bolts on each side using a 3/16" hex wrench:
+
+	<img src="rev0/yadjubolt1.jpeg" width="600">
+
+   	**NOTE: One of the bolts will require you to access it at an angle - you may wish to only snug up this bolt to make adjustments easier**
+	
+	<img src="rev0/yadjfunky.jpeg" width="600">
+
+3. Pull the table to the new position:
+
+	<img src="rev0/yadjpull.jpeg" width="600">
+
+4. Tighten the **four** bolts on each side using a 3/16" hex wrench:
+
+	<img src="rev0/yadjubolt1.jpeg" width="600">
+
+5. Tighten the main adjustment bolt:
+
+	<img src="rev0/jesusbolt.jpeg" width="600">
 
 ### Z Adjustment
 
+**WARNING: When adjusting the Z axis, you may wish to remove the ChipSHOUTER mount. It is easy to knock the ChipSHOUTER during this operation which may damage it.**
+
 #### Lowering
 
+1. Using a 5/32" wrench, loosen the Z-stop bolts:
+
+	<img src="rev0/zstophigh.jpeg" width="600">
+
+2. Set the new Z-stop location and tighten the bolts:
+
+	<img src="rev0/zstoplow.jpeg" width="600">
+
+3.  Using a 3/16" hex wrench, loosen the four bolts underneath the X axis table on the left and right sides.
+
+	<img src="rev0/zholderwrench.jpeg" width="600">
+
+4. Loosen the main adjustment bolt, holding the table while doing so:
+
+	<img src="rev0/pushwhilejesus.jpeg" width="600">
+
+5. Gently lower the table onto the Z-axis stops:
+
+	<img src="rev0/pushup.jpeg" width="600">
+
+6. Tighten the X axis table bolts - 4 on each side:
+
+	<img src="rev0/zholderwrench.jpeg" width="600">
+
+7. Tighten the main adjustment bolt:
+
+	<img src="rev0/jesusbolt.jpeg" width="600">
+
+Done!
+
 #### Raising
+
+1. Using a 3/16" hex wrench, loosen the four bolts underneath the X axis table on the left and right sides. Note there is a "stop" piece that will prevent any movement (dropping), you may wish to ensure these bolts are tight.
+
+	<img src="rev0/zholderwrench.jpeg" width="600">
+
+2. Loosen the main adjustment bolt:
+
+	<img src="rev0/jesusbolt.jpeg" width="600">
+
+3. Push up on both blocks to raise the table - you may need to *further* loosen some of the four bolts underneath each side from step 1 for this to work:
+
+	<img src="rev0/pushup.jpeg" width="600">
+
+4. Keeping one hand on a block to "lock" it in place, tighten the main adjustment bolt. Note in the photo above you may find it handy to simply leave the provided shorter 3/16" wrench in the main bolt to make this easier:
+
+	<img src="rev0/pushwhilejesus.jpeg" width="600">
+
+5. Tighten the X axis table bolts - 4 on each side:
+
+	<img src="rev0/zholderwrench.jpeg" width="600">
+
+6. The Z-Stops are now too low - loosen the Z-stop bolt (using a 5/32" wrench):
+
+	<img src="rev0/zstoplow.jpeg" width="600">
+
+7. Raise the Z-Stops and tighten them again:
+
+	<img src="rev0/zstophigh.jpeg" width="600">
+
+Done!
 
 ## Mounting Boards to Base Plate
 
