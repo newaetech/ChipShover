@@ -2,7 +2,7 @@ from setuptools import setup, find_packages
 
 setup(
     name='chipshover',
-    version='0.1.2',
+    version='0.2.0',
     url='https://github.com/newaetech/ChipSHOVER',
     author='NewAE Technology Inc.',
     author_email='coflynn@newae.com',
