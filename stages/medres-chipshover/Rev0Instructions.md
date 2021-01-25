@@ -153,7 +153,6 @@ NOTE: We use a 4-40 thread in these plates as 4-40 bolt has a 2.85mm diameter. T
 
 The base plate uses standard M6 threaded holes on a 25 x 25mm pattern. This allows usage of almost any optical mounts to help with your board mounting solutions.
 
-In particular, [Thor Labs](https://www.thorlabs.com/navigation.cfm?guide_id=2065) has a variety of mounts which you may find useful.
+In particular [Thor Labs](https://www.thorlabs.com/navigation.cfm?guide_id=2065) has a variety of mounts which you may find useful.
 
-
-The metric [Pillar Post System](https://www.thorlabs.com/newgrouppage9.cfm?objectgroup_id=1316) provides a similar (but more rigid) solution to our board mounting kit.
+The metric [Pillar Post System](https://www.thorlabs.com/newgrouppage9.cfm?objectgroup_id=1316) provides a similar (but more rigid) solution to our board mounting kit. Note this uses a M6 bolt on top of the pillar - you likely will want to order a quantity of [M6 external to M3 internal adapters](https://www.thorlabs.com/thorproduct.cfm?partnumber=MSA6/M#ad-image-0). You can use this with M3 standoffs to easily mount boards to your table, or even [M3 to 4-40 adapters](https://www.mcmaster.com/91648A109/) if you need smaller screw holes.
