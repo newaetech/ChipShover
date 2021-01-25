@@ -22,7 +22,7 @@
 # * limitations under the License.
 # ********************************************************************************/
 '''
-    ChipSHOVER API Documentation
+    ChipShover API Documentation
     ============================
 
     For typical usage, after starting the ChipShover, you should 
@@ -44,6 +44,7 @@
     The ChipShover can also be swept along the XY axis:
 
     >>> for x,y in shv.sweep_x_y(0, 5, 0, 5, step=0.5):
+            print("at %f, %f"%(x, y))
 
     While using the ChipShover, it may become necessary to pause
     or stop the ChipShover. This can be done by either the stop
@@ -59,6 +60,12 @@
     command be performed after a stop is issued. In practice, the position
     seems to still be fairly accurate after a stop and so this is only
     recommended and not required.
+    
+    If using most commands interactively (from a Jupyter notebook),
+    hitting Ctrl-C should issue a `stop()` command. The assumption is if you
+    interrupt the program with Ctrl-C that is because bad things were about to
+    happen. Without the `stop()` command, the controller will finish
+    executing the last command, such as a move.
 
 '''
 import serial
@@ -71,7 +78,7 @@ import binascii
 
 
 def firmware_update(comport, fw_path=None):
-    """ Flashes new firmware to the SAM3X8E.
+    """ Flashes new firmware to the SAM3X8E (this command is for ChipShover-One only).
 
     Args:
         comport (str): Path to serial port, ex COM4
@@ -139,7 +146,7 @@ def _gen_firmware(fw_path=None):
     pass
 
 class ChipShover:
-    """ChipShover is a controller for XY(Z) tables. Assumes Marlin-based
+    """ChipShover is a controller for XYZ tables. Assumes Marlin-based
        firmware for commands.
        
        
@@ -153,7 +160,7 @@ class ChipShover:
         self.ser = serial.Serial(comport, rtscts=True)
         self._com = comport
         
-        #Required for Archim2 USB serial
+        #Required for ChipShover-One + Archim2 USB serial
         self.ser.rtscts = True
         self.ser.timeout = 0.25
         self.z_home = None
@@ -262,6 +269,12 @@ class ChipShover:
         Uses a `G0` command to move the table. The function
         will use a `M400` command to wait for the movement
         to complete before returning.
+        
+        WARNING: The `z` is an absolute position - the default
+                 home `z` is often the MAXIMUM value. Thus a
+                 move to z=0` may slam your table into the ground.
+                 You can use the `move_zdepth()` function for
+                 moving a depth from the home position instead.
         """
         
         cmdstr = b"G0 "
@@ -393,6 +406,9 @@ class ChipShover:
         The `z_plunge` parameter can be used to specify a certain amount of z-plunge
         performed at each point. This is normally used with BBI or similar probes that
         must be put in contact with the die.
+        
+        If using interactive Python (Jupyter), hitting `Ctrl-C` during this
+        function run will call `stop()` by default.
         """
 
         if x_start > x_end:
