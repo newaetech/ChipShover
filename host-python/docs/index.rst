@@ -3,17 +3,20 @@
    You can adapt this file completely to your liking, but it should at least
    contain the root `toctree` directive.
 
-ChipSHOVER Python API Documentation
+ChipShover Python API Documentation
 ======================================
 
-ChipSHOVER is an XY(Z) Table controller table and driver. Based on
-Marlin 3D printer firmware, it accepts G-Codes for PC based control
-of its position and various other functionality. It also
-includes an LCD for status readout, as well as a joystick/buttons
-for quick positioning and other control.
+ChipSHOVER is the Precision Position Producer, and consists of the full
+chain of a physical XYZ table, mounts, electronic controller, and Python
+interface. The control electronics (called ChipShover-One) are based on the
+Marlin 3D printer firmware, meaning they use standard G-Codes for PC based
+control of its position and various other functionality.
 
-This Python API is designed as a simple way to control the 
-ChipSHOVER from a programming language.
+This Python API is designed as a simple way to control the ChipSHOVER-One
+from Jupyter notebooks or other Python scripts/programs. You can use this
+ChipShover Python API with other 3D printed based mainboards - we specifically
+used standard 3D printer firmware & G-Codes to make it easier to maintain
+the same Pythin API interface.
 
 .. toctree::
    :maxdepth: 2
@@ -23,10 +26,10 @@ ChipSHOVER from a programming language.
 .. autoclass:: ChipShover
     :members:
 
-This documentation is part of the ChipSHOUTER Python API.
+This documentation is part of the ChipShover Python API.
 
 Permission is hereby granted, free of charge, to any person obtaining a copy
-of this ChipSHOUTER Python API software and associated documentation files
+of this ChipShover Python API software and associated documentation files
 (the "Software"), to deal in the Software without restriction, including
 without limitation the rights to use, copy, modify, merge, publish, distribute,
 sublicense, and/or sell copies of the Software, and to permit persons to whom
@@ -43,7 +46,7 @@ LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
 OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 SOFTWARE.
 
-ChipSHOUTER is a registered trademark of NewAE Technology Inc.
+ChipShover is a registered trademark of NewAE Technology Inc.
     
 Indices and tables
 ==================
