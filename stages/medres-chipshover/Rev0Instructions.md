@@ -13,6 +13,10 @@ You should roughly have the following after that page:
 
 <img src="rev0/stages_chipshover.jpeg" width="600">
 
+## ChipShover Python Interface
+
+See [chipshover.readthedocs.io](https://chipshover.readthedocs.io/) for the full Python interface details.
+
 ## Adjusting Coarse Position
 
 You will have to adjust the position of the ChipShover XYZ stages in a "coarse" fashion to get the ChipShover 50mm travel range to be within the area of your interest. 

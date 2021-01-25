@@ -126,7 +126,7 @@ The stepper motor cables are all standard DB-9 straight-through cables. The prov
 
 Due to the spacing at the ChipShover controller the ChipShover mating side cannot use a backshell. Thus you may be limited to IDC style cables for off the shelf cables.
 
-The X/Y/Z/ axis cables have been labelled to make setup quicker. To connect them:
+The X/Y/Z/ axis cables have been labelled to make setup quicker (the cables being electrically identical). To connect them:
 
 1. Connect each cable to the DB9 connector on each stage. The Z axis connector is straight up and the cable should be routed to a cable mount, the X and Y axis cables are right-angle and will route the cable downward for a cleaner workspace.
 2. Tighten screws on the stage end connector.
@@ -138,7 +138,21 @@ The X/Y/Z/ axis cables have been labelled to make setup quicker. To connect them
 
 	<img src="rev0/cablerouting.jpeg" width="600">
 
-## 7. Add ChipSHOUTER Mounting Bracket
+## 7. Optional - Test Table
+
+At this point you can test the table before mounting the ChipSHOUTER. To test the table stand-alone:
+
+1. Connect the power supply (4-pin mini-DIN).
+2. Turn the power switch on - the switch should illuminate green. If the switch does not illuminate check the power supply.
+3. The ChipShover should boot & display status information.
+4. Release the E-Stop button by *Rotating it clockwise*, as the E-Stop may have been engaged during shipping.
+5. Hold the "stop / home" button for 3-4 seconds - the ChipSHOVER should start the homing operation. You can release the button once it starts the homing operation.
+6. **If the homing operation is failing (such as not detecting end-stops) press the E-Stop button immediately**.
+7. Press the "Jog En" button to enable the joystick.
+8. Move the joystick in X & Y, and rotate it for Z. The current firmware moves by a fixed amount for each time period (this interface will be adjusted in the future).
+9. Power off the ChipShover & complete the rest of the steps.
+
+## 8. Add ChipSHOUTER Mounting Bracket
 
 The ChipSHOUTER mounting bracket fits onto the Z axis stage. Typically it is mounted "low" on the Z stage, where only the upper 2 bolts are used:
 
@@ -146,7 +160,7 @@ The ChipSHOUTER mounting bracket fits onto the Z axis stage. Typically it is mou
 
 Be sure to check you have sufficient clearance for the power & other connectors on the top-side of the ChipSHOUTER. If the ChipSHOUTER is mounted too high, it will cause a collision with the ChipSHOUTER cables and top of the stage. See the example photos with the ChipSHOUTER present.
 
-## 8. Mount ChipSHOUTER
+## 9. Mount ChipSHOUTER
 
 To mount the ChipSHOUTER into the bracket, tighten the 6-32 socket head screws. These screws have a "soft brass" tip - they will still leave a small mark on the aluminum ChipSHOUTER enclosure, but the tip fit helps to secure the ChipSHOUTER into the bracket.
 
