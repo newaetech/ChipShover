@@ -32,8 +32,15 @@ This was a numbering failure - ignore Box 3.
 
 **Box 5 (inside Box 6): Mounting Hardware**
 
-* Cable Mounts for Frame
-* DUT Mounts for Table
+* 2x Cable Mounts for Frame
+* DUT Mounts for Table:
+	* Interface feet
+	* 6x M6-10 bolts
+	* 6x 4-40 x 1/4" standoff
+	* 6x 4-40 x 3/8" standoff
+	* 6x 4-40 x 3/4" standoff
+	* 6x 4-40 x 1/4" cap head bolt
+	* 6x 4-40 x 3/8" cap head bolt
 * Misc hardware.
 
 **Box 6 (inside Box 1): Z-Plate and Tools**
