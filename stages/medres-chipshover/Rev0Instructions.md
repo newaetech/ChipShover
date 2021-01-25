@@ -140,13 +140,18 @@ We provide a board mounting kit, which consists of three pieces:
 
 This allows you to mount boards to the base, as in this example:
 
-<PHOTO>
+<img src="rev0/boardmount.jpeg" width="600">
 
 To set this up, simply:
 
 1. Select a stand-off height as appropriate for your board. Typically the shortest stand-off possible provides the best mechanical stability.
+
+	<img src="rev0/interfacefeet.jpeg" width="400">
+
 2. Roughly position the board and base pieces.
+
 3. Loosely insert the M6 bolts & 4-40 bolts.
+
 4. Tighten all bolts, performing final adjustments as needed before final tightening.
 
 Be sure to consider the movement of the XY table and where your actual chip of interest is located. You can normally mount the board to provide some additional "coarse" adjustment range which makes for more rapid setup.

@@ -69,16 +69,13 @@ A Python interface simplifies use from existing Jupyter notebooks and similar.
 
 Here is an example usage to sweep an IC surface from (10.0, 10.0) to (12.5, 12.5) in 0.05mm steps. Also plunge the Z-axis down to touch a probe to the surface at each location (useful when probe cannot be dragged across surface safely).
 
-*NB*: This is super-alpha, so the import will be fixed before beta version.
+	from chipshover import ChipShover
 
-	import chipshover
-	import chipshover.chipshover
+	shv = ChipShover('com3')
 
-	cs = chipshover.chipshover.ChipShover('com3')
+	shv.home()
 
-	cs.home()
-
-	for x,y in cs.sweep_x_y(10, 12.5, 10, 12.5, step=0.05, z_plunge=1.5):
+	for x,y in shv.sweep_x_y(10, 12.5, 10, 12.5, step=0.05, z_plunge=1.5):
 	    print("At %f, %f"%(x,y))
 
 

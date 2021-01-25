@@ -138,6 +138,8 @@ The X/Y/Z/ axis cables have been labelled to make setup quicker (the cables bein
 
 	<img src="rev0/cablerouting.jpeg" width="600">
 
+	**HINT: If you you need to remove the captive screws from the cable on the ChipShover-One controller end, do this by holding the retaining washer with pliers and "backing out" the bolts.**
+
 ## 7. Optional - Test Table
 
 At this point you can test the table before mounting the ChipSHOUTER. To test the table stand-alone:
