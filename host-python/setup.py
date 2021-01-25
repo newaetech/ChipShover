@@ -14,7 +14,7 @@ setup(
     author_email='coflynn@newae.com',
     description='XYZ Controller Interface for ChipShover.',
     long_description=long_description,
-    long_description_content_type='text/markdown'
+    long_description_content_type='text/markdown',
     packages=find_packages(),
     install_requires=['pyserial >= 3.4'],
     project_urls={
