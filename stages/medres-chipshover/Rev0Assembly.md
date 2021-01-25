@@ -9,6 +9,8 @@ Your shipment should contain the following boxes:
  * Frame with X Axis already mounted
  * Extra-long 3/16" ball-end T-Handle driver
  * Extra-long 5/8" ball-end T-Handle driver
+ * Box 6
+ * Box 8
 
 **Box 2: Y and Z Axis Stages**
 
@@ -19,9 +21,7 @@ Your shipment should contain the following boxes:
 
 **Box 3: Packing Box**
 
-* Box 2
-* Box 7
-* TBD
+This was a numbering failure - ignore Box 3.
 
 **Box 4 (inside Box 6): ChipSHOUTER Mount**
 
@@ -61,7 +61,7 @@ Your shipment should contain the following boxes:
 
 ## 1. Place Stage Frame on Table
 
-You can remove the frame by holding the vertical framing members & pulling it up out of the box.
+Remove Box 6 & Box 8 from the box with the frame. Then you can remove the frame by holding the vertical framing members & pulling it up out of the box.
 
 <img src="rev0/frameremoval.jpg" width="600">
 
@@ -129,10 +129,31 @@ Due to the spacing at the ChipShover controller the ChipShover mating side canno
 The X/Y/Z/ axis cables have been labelled to make setup quicker. To connect them:
 
 1. Connect each cable to the DB9 connector on each stage. The Z axis connector is straight up and the cable should be routed to a cable mount, the X and Y axis cables are right-angle and will route the cable downward for a cleaner workspace.
-2. Connect the other end of each cable to the ChipShover controller.
-3. Use the provided 1/4" x 4-40 bolts to screw the cables into the ChipShover.
+2. Tighten screws on the stage end connector.
+3. Connect the other end of each cable to the ChipShover controller - the captive screws need to be tightened to mate the cables.
+
+	<img src="rev0/cablemating.jpeg" width="600">
+
+4. Route the cables through the ChipShover cable mounts as suitable (shown here also with ChipSHOUTER mounted - but note the Z stage cable routing through the lower mount).
+
+	<img src="rev0/cablerouting.jpeg" width="600">
 
 ## 7. Add ChipSHOUTER Mounting Bracket
 
+The ChipSHOUTER mounting bracket fits onto the Z axis stage. Typically it is mounted "low" on the Z stage, where only the upper 2 bolts are used:
+
+<img src="rev0/chipshoverplate.jpg" width="600">
+
+Be sure to check you have sufficient clearance for the power & other connectors on the top-side of the ChipSHOUTER. If the ChipSHOUTER is mounted too high, it will cause a collision with the ChipSHOUTER cables and top of the stage. See the example photos with the ChipSHOUTER present.
+
 ## 8. Mount ChipSHOUTER
 
+To mount the ChipSHOUTER into the bracket, tighten the 6-32 socket head screws. These screws have a "soft brass" tip - they will still leave a small mark on the aluminum ChipSHOUTER enclosure, but the tip fit helps to secure the ChipSHOUTER into the bracket.
+
+If you wish to avoid this mark, place a small piece of blanking metal (such as pop can metal) between the ChipSHOUTER enclosure and the screw tips. Be sure the screws are still sufficiently tight & will not loosen, we suggest using Loctite in them if you feel comfortable with the ChipSHOUTER configuration.
+
+The 6-32 socket head screws use a 7/64" hex driver. This hex driver bit is included alongside the ChipSHOUTER mounting plate - you will need the flex driver to use this (you can use any other screwdriver as well with this).
+
+Setup is now complete! Hopefully the end results look something like this:
+
+<img src="rev0/stages_chipshover.jpeg" width="800">
