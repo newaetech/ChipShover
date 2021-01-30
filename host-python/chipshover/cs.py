@@ -325,7 +325,9 @@ class ChipShover:
         ok = self.ser.readline()
         
         if ok != b'ok\n':
-            raise IOError("Com error on M114\n")
+            print("DEBUG: 'pos_line': %s"%pos_line)
+            print("DEBUG: 'ok' line : %s"%ok)
+            raise IOError("Com error on M114 - received %s, expected 'ok'\n"%ok)
             
         
         pos_line = pos_line.split(b' ')       
@@ -491,7 +493,11 @@ class ChipShover:
                 print("Ctrl-C detected - calling stop() to stop table movement")
                 self.stop()
             raise
-             
+        
+        #Sometimes buffer seems to have stuff in it still - do one last read
+        resp = self.ser.readline()
+        debug_data += resp
+        
         return debug_data
 
     def status(self):
