@@ -89,8 +89,8 @@ We reverse the X axis stepper so it goes "backwards" - you can do this in firmwa
 | Red | A-         | Stepper - reversed!     |
 | Blue | B+         | Stepper |
 | Yellow | B-       | Stepper |
-| Switch | ES1-G    | REAR endstop (min) |
-| Switch | ES1-P    | REAR endstop (min) |
+| Switch | ES1-G    | RIGHT endstop (min) |
+| Switch | ES1-P    | RIGHT endstop (min) |
 
 The right endstop (right when looking from the FRONT) is used, so we run the wire across as shown in the previous photo.
 
@@ -106,8 +106,8 @@ The right endstop (right when looking from the FRONT) is used, so we run the wir
 | Green | A-         | Stepper|
 | Blue | B+         | Stepper |
 | Yellow | B-       | Stepper |
-| Switch | ES1-G    | RIGHT endstop (min) |
-| Switch | ES1-P    | RIGHT endstop (min) |
+| Switch | ES1-G    | REAR endstop (min) |
+| Switch | ES1-P    | REAR endstop (min) |
 
 Be sure to secure the endstop cable so it doesn't pull the wires from the switch.
 
