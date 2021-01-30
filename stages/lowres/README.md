@@ -2,7 +2,7 @@
 
 <img src="images/3020overall.jpg">
 
-These instructions show you how to translate a kinda cheap CNC frame into a high quality EMFI or SCA XYZ scanning solution using the ChipShover-One.
+These instructions show you how to translate a kinda cheap  ($500 + shipping) CNC frame into a high quality EMFI or SCA XYZ scanning solution using the ChipShover-One.
 
 Once you are done you'll have a solution with around 1um resolution (although considerably more backlash & overall error).
 

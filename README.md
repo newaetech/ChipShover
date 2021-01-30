@@ -23,7 +23,7 @@ If you wish to have minimum hassle, this is available in an easy-to-assemble kit
 
 ### Low-Resolution Stage
 
-The low-resolution stage uses a CNC frame fairly widely available on AliExpress and similar. With this version you must buy the stage yourself - the size and lowish cost of the stage makes it not worth carrying for NewAE! The cost is significantly lower, with more hassle in the purchasing process and somewhat lower resolution and specifications on the resulting table.
+The low-resolution stage uses a CNC frame fairly widely available on AliExpress and similar. With this version you must buy the stage yourself - the size and lowish cost ($500) of the stage makes it not worth carrying for NewAE! The cost is significantly lower, with more hassle in the purchasing process and somewhat lower resolution and specifications on the resulting table.
 
 ## Interposers
 
