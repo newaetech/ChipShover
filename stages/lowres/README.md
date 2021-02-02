@@ -113,7 +113,7 @@ Be sure to secure the endstop cable so it doesn't pull the wires from the switch
 
 ### Checking Interface
 
-Todo - using LEDs.
+The ChipShover-One status LEDs will tell you the status of each end-stop. The lights should go *off* when the endstop is pressed with the default configuration.
 
 ### ChipShover Settings
 
@@ -140,10 +140,18 @@ You can 3D print a mounting bracket that replaces the spindle holder.
 
 * Remove the M4 bolts holding the motor/spindle holder.
 * 3D print the model in this repository - there are two versions of this holder.:
+	* "No Hardware Needed" does not require any hardware.
 	* "Hardware Needed" version uses heatset screw inserts.
-	* "Cheap Version" does not require any hardware.
 * Bolt the holder back into position using M4-16 bolts. You may need to loosen the Philips screws holding the aluminum Z-ballscrew cover plate, as it's a very tight fit over the cover plate, and there is some play in the cover plate position once the screws are loose. Tighten the Philips screws back after. 
-* Use a 6-32 bolt to secure the ChipSHOUTER.
+* Use a 6-32-1/2" bolt to secure the ChipSHOUTER.
+
+<img src="images/holderdetail.jpg" width=400px>
+
+The 6-32 bolt will leave a mark on the side of the ChipSHOUTER enclosure:
+
+<img src="images/marks.jpg" width=400px>
+
+You can use a piece of metal to push against, or use the brass-tip bolts (link below) which leaves a smaller mark.
 
 When 3D printing, I was able to get away without adding support structure:
 

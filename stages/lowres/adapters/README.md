@@ -1,5 +1,12 @@
+# ChipSHOUTER to 3020 Stage Adapter
 
+These adapters are mounted in place of the spindle holder. It should fit the default M4 bolts used on the frame. Remove the spindle holder, and bolt on the ChipSHOUTER adapter.
 
+If you wish to use a screw insert you can print the HardwareNeeded version, otherwise print the NoHardwareNeeded version.
+
+## Model Notes
+
+The two versions of the model are the same, with the inner diameter of the hole changed:
 
 **For 6-32 insert:**
   Hole diameter = 4.90 mm
