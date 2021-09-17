@@ -157,7 +157,9 @@ class ChipShover:
     
     def __init__(self, comport):
         """Connect to ChipShover-Controller using given serial port."""
-        self.ser = serial.Serial(comport, rtscts=True)
+        self.ser = serial.Serial(comport, baudrate=115200, parity=serial.PARITY_NONE, stopbits=serial.STOPBITS_ONE)
+        self.ser.write(b"\r\n\r\n")
+        time.sleep(2)
         self._com = comport
         
         #Required for ChipShover-One + Archim2 USB serial
@@ -179,41 +181,68 @@ class ChipShover:
         self.wait_done()
 
         #Check the "steps per unit" is valid
+        self.get_steps_grbl()
+
+
+        #self.set_fan(50)
+
+        self.call_stop_on_ctrlc = True
+        
+        #TODO - 
+        #signal.signal(signal.SIGINT, self.stop)
+
+    def get_steps_grbl(self):
+        self.ser.write(b"$$\n")
+        line = None
+        xsteps, ysteps, zsteps = None, None, None
+        while line != b'':
+            line = self.ser.readline()
+            if b'=' in line:
+                param, val = line.split(b'=')
+                val = float(val.split(b' ')[0])
+                if param == b'$100':
+                    xsteps = val
+                elif param == b'$101':
+                    ysteps = val
+                elif param == b'$102':
+                    zsteps = val
+        if xsteps != ysteps != zsteps:
+            raise ValueError("XSTEPS/YSTEPS/ZSTEPS differs. Abort. %f %f %f" % (xsteps, ysteps, zsteps))
+
+        if xsteps < 100 or xsteps > 10E3:
+            raise ValueError("Sanity check in XSTEPS failed. %f" % xsteps)
+
+        self.STEPS_PER_MM = int(xsteps)
+
+
+    def get_steps_marlin(self):
         self.ser.write(b"M503\n")
         results = self.wait_done()
         try:
             splitres = results.split(b"Steps per unit:\necho: M92")[1].split(b"\n")[0]
             splitres = splitres.split(b" ")
             if splitres[1][0] != ord('X') or \
-               splitres[2][0] != ord('Y') or \
-               splitres[3][0] != ord('Z'):
+                    splitres[2][0] != ord('Y') or \
+                    splitres[3][0] != ord('Z'):
                 raise IOError("Communication problem attempting to read" + \
-                               "M503 response. %s was splitres"%splitres)
+                              "M503 response. %s was splitres" % splitres)
             xsteps = float(splitres[1][1:])
             ysteps = float(splitres[2][1:])
             zsteps = float(splitres[3][1:])
 
             if xsteps != ysteps != zsteps:
-                raise ValueError("XSTEPS/YSTEPS/ZSTEPS differs. Abort. %f %f %f"%(xsteps, ysteps, zsteps))
+                raise ValueError("XSTEPS/YSTEPS/ZSTEPS differs. Abort. %f %f %f" % (xsteps, ysteps, zsteps))
 
             if xsteps < 100 or xsteps > 10E3:
-                raise ValueError("Sanity check in XSTEPS failed. %f"%xsteps)
+                raise ValueError("Sanity check in XSTEPS failed. %f" % xsteps)
 
             self.STEPS_PER_MM = int(xsteps)
 
         except:
             print("Failed to read steps/mm, check communication is OK.")
-            print("Response to M503: %s"%results)
+            print("Response to M503: %s" % results)
             raise
 
-
-        self.set_fan(50)
-
-        self.call_stop_on_ctrlc = True
-        
-        #TODO - 
-        #signal.signal(signal.SIGINT, self.stop)
-        
     def set_fan(self, fan_speed=100):
         """Sets cooling fan speed, range of 0 - 100"""
 
@@ -291,12 +320,25 @@ class ChipShover:
             print(cmdstr)
             
         
-        self.ser.write(cmdstr)        
+        self.ser.write(cmdstr)
         self.wait_done()
 
-        self.wait_for_move()
-        
-    def wait_for_move(self):
+        self.wait_for_move_grbl()
+
+
+    def wait_for_move_grbl(self):
+        self.ser.flush()
+        self.ser.reset_input_buffer()
+        # wait for move to finish
+        self.ser.write(b"?\n")
+        while True:
+            line = self.ser.readline()
+            if line.startswith(b'<Idle'):
+                break
+
+
+
+    def wait_for_move_marlin(self):
         """Wait for current movement to be done"""
 
         self.ser.flush()
@@ -479,7 +521,7 @@ class ChipShover:
                     timeout_cnt = 0
 
                 #Done deal I guess
-                if resp == b'ok\n':
+                if resp == b'ok\r\n':
                     break
 
                 time.sleep(0.25)
