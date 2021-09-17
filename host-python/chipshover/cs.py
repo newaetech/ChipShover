@@ -318,8 +318,7 @@ class ChipShover:
         
         if debug:
             print(cmdstr)
-            
-        
+
         self.ser.write(cmdstr)
         self.wait_done()
 
@@ -333,8 +332,13 @@ class ChipShover:
         self.ser.write(b"?\n")
         while True:
             line = self.ser.readline()
+            self.wait_done()
             if line.startswith(b'<Idle'):
                 break
+            self.ser.write(b"?\n")
+
+        self.ser.flush()
+        self.ser.reset_input_buffer()
 
 
 
@@ -348,7 +352,22 @@ class ChipShover:
         self.wait_done()
 
 
-    def get_position(self, forcefinish=True):
+    def get_position_grbl(self, forcefinish=True):
+        if forcefinish:
+            self.wait_for_move_grbl()
+
+        self.ser.write(b'?\n')
+        status = self.ser.readline()
+        work_pos = status.split(b'WPos:')[1][:-3]
+        x_pos, y_pos, z_pos = work_pos.split(b',')
+        x_pos = float(x_pos)
+        y_pos = float(y_pos)
+        z_pos = float(z_pos)
+        self.wait_done()
+        return x_pos, y_pos, z_pos
+
+
+    def get_position_marlin(self, forcefinish=True):
         """Gets the X/Y/Z position of the table.
         
         By default will wait for any movement to
@@ -359,7 +378,7 @@ class ChipShover:
         
         if forcefinish:
             #wait for move to finish
-            self.wait_for_move()
+            self.wait_for_move_marlin()
         
         self.ser.write(b"M114\n")
         
@@ -432,7 +451,7 @@ class ChipShover:
         
         home_resp = self.wait_done()
         
-        self.z_home = self.get_position()[2]
+        self.z_home = self.get_position_grbl()[2]
         
         return home_resp
 
@@ -476,7 +495,7 @@ class ChipShover:
                 self.move(y=y)         
 
                 if z_plunge:
-                    old_z = self.get_position()[2]
+                    old_z = self.get_position_grbl()[2]
                     self.move(z = (old_z-z_plunge))
 
                 yield (x, y)
