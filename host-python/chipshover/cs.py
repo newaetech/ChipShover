@@ -75,6 +75,12 @@ import os
 import base64
 import datetime
 import binascii
+from enum import Enum
+
+
+class FirmwareType(Enum):
+    Marlin = 0
+    Grbl = 1
 
 
 def firmware_update(comport, fw_path=None):
@@ -155,11 +161,15 @@ class ChipShover:
     #Default ChipShover table/firmware combo
     STEPS_PER_MM = 1600
     
-    def __init__(self, comport):
+    def __init__(self, comport, firmware: FirmwareType = FirmwareType.Marlin):
         """Connect to ChipShover-Controller using given serial port."""
-        self.ser = serial.Serial(comport, baudrate=115200, parity=serial.PARITY_NONE, stopbits=serial.STOPBITS_ONE)
-        self.ser.write(b"\r\n\r\n")
-        time.sleep(2)
+        self.firmwaretype = firmware
+        if self.firmwaretype == FirmwareType.Grbl:
+            self.ser = serial.Serial(comport, baudrate=115200, parity=serial.PARITY_NONE, stopbits=serial.STOPBITS_ONE)
+            self.ser.write(b"\r\n\r\n")
+            time.sleep(2)
+        else:
+            self.ser = serial.Serial(comport, rtscts=True)
         self._com = comport
         
         #Required for ChipShover-One + Archim2 USB serial
@@ -184,7 +194,8 @@ class ChipShover:
         self.get_steps_grbl()
 
 
-        #self.set_fan(50)
+        if self.firmwaretype == FirmwareType.Marlin:
+            self.set_fan(50)
 
         self.call_stop_on_ctrlc = True
         
@@ -322,8 +333,10 @@ class ChipShover:
         self.ser.write(cmdstr)
         self.wait_done()
 
-        self.wait_for_move_grbl()
-
+        if self.firmwaretype == FirmwareType.Marlin:
+            self.wait_for_move_marlin()
+        elif self.firmwaretype == FirmwareType.Grbl:
+            self.wait_for_move_grbl()
 
     def wait_for_move_grbl(self):
         self.ser.flush()
@@ -340,8 +353,6 @@ class ChipShover:
         self.ser.flush()
         self.ser.reset_input_buffer()
 
-
-
     def wait_for_move_marlin(self):
         """Wait for current movement to be done"""
 
@@ -350,7 +361,6 @@ class ChipShover:
         #wait for move to finish
         self.ser.write(b"M400\n")
         self.wait_done()
-
 
     def get_position_grbl(self, forcefinish=True):
         if forcefinish:
@@ -365,7 +375,6 @@ class ChipShover:
         z_pos = float(z_pos)
         self.wait_done()
         return x_pos, y_pos, z_pos
-
 
     def get_position_marlin(self, forcefinish=True):
         """Gets the X/Y/Z position of the table.
@@ -450,8 +459,12 @@ class ChipShover:
         self.ser.write(b"\n")
         
         home_resp = self.wait_done()
-        
-        self.z_home = self.get_position_grbl()[2]
+
+        if self.firmwaretype == FirmwareType.Marlin:
+            self.z_home = self.get_position_marlin()[2]
+
+        elif self.firmwaretype == FirmwareType.Grbl:
+            self.z_home = self.get_position_grbl()[2]
         
         return home_resp
 
@@ -495,7 +508,10 @@ class ChipShover:
                 self.move(y=y)         
 
                 if z_plunge:
-                    old_z = self.get_position_grbl()[2]
+                    if self.firmwaretype == FirmwareType.Marlin:
+                        old_z = self.get_position_marlin()[2]
+                    elif self.firmwaretype == FirmwareType.Grbl:
+                        old_z = self.get_position_grbl()[2]
                     self.move(z = (old_z-z_plunge))
 
                 yield (x, y)
@@ -540,7 +556,7 @@ class ChipShover:
                     timeout_cnt = 0
 
                 #Done deal I guess
-                if resp == b'ok\r\n':
+                if resp == b'ok\r\n' or resp == b'ok\n':
                     break
 
                 time.sleep(0.25)
