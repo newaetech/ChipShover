@@ -15,6 +15,6 @@ The first alpha release was called rev0:
 
 This page provides documentation for these early versions:
 
-See [old_revisions/Rev0Assembly.md](Rev0Assembly.md "Rev 0 Assembly Document") for assembly instructions.
+See [old_revisions/Rev0Assembly.md](old_revisions/Rev0Assembly.md "Rev 0 Assembly Document") for assembly instructions.
 
-See [old_revisions/Rev0Instructions.md](Rev0Instructions.md "Rev 0 Instructions Document") for usage instructions.
+See [old_revisions/Rev0Instructions.md](old_revisions/Rev0Instructions.md "Rev 0 Instructions Document") for usage instructions.
