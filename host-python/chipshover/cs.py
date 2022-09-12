@@ -222,7 +222,8 @@ class ChipShover:
         fan_pwm = min(fan_pwm, 255)
         fan_pwm = max(fan_pwm, 0)
 
-        self.ser.write(b"M106 P1 S%d\n"%fan_pwm)
+        #Early protos had this as P1, now P0
+        self.ser.write(b"M106 P0 S%d\n"%fan_pwm)
         self.wait_done()
 
     def close(self):
