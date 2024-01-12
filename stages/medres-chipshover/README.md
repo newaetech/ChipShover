@@ -4,9 +4,9 @@
 ChipShover Rev 2 is the production release of ChipShover, shipped from 2024 and onward. This page provides documentation for this production version. There is currently no printed documentation. 
 
 
-See [Rev1Assembly.md](Rev1Assembly.md "Rev 1 Assembly Document") for assembly instructions.
+See [Rev2Assembly.md](Rev2Assembly.md "Rev 2 Assembly Document") for assembly instructions.
 
-See [Rev1Instructions.md](Rev1Instructions.md "Rev 1 Instructions Document") for usage instructions.
+See [Rev2Instructions.md](Rev2Instructions.md "Rev 2 Instructions Document") for usage instructions.
 
 NOTE: The X stage is mounted backwards in this photo - the assembly instructions above have it the correct way around.
 
