@@ -20,7 +20,7 @@ To remove them, use the provided M5 ball-end driver. The bolts are M6x10 bolts, 
 
 You will need to use the thumb wheel to move the Y stage forward until all 8 mounting holes are exposed:
 
-<img src="rev2/y_thumbhwheel.jpg">
+<img src="rev2/ystage_thumbwheel.jpg">
 
 
 The Y stage includes the Z-stage mounting bracket. Using only 3 M6x10 bolts, mount that stage to the X stage as shown below (note one hole cannot accept a screw). DO NOT use any longer than M6x10 bolts!
@@ -78,7 +78,7 @@ At this point you can test the table before mounting the ChipSHOUTER. To test th
 
 The ChipSHOUTER mounting bracket fits onto the Z axis stage, and is pre-installed for shipping. You can move it to be mounted "lower" on the Z stage, where only the upper 2 bolts are used which provides more clearance if you wish:
 
-<img src="rev1/cs_holder_1.jpeg" width="600">
+<img src="old_revisions/rev1/cs_holder_1.jpeg" width="600">
 
 Be sure to check you have sufficient clearance for the power & other connectors on the top-side of the ChipSHOUTER. If the ChipSHOUTER is mounted too high, it will cause a collision with the ChipSHOUTER cables and top of the stage.
 
