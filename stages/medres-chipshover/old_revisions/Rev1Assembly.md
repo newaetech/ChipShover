@@ -132,7 +132,7 @@ The X/Y/Z/ axis cables have been labelled to make setup quicker (the cables bein
 2. Tighten screws on the stage end connector.
 3. Connect the other end of each cable to the ChipShover controller - the captive screws need to be tightened to mate the cables.
 
-	<img src="old_revisions/rev0/cablemating.jpeg" width="600">
+	<img src="rev1/cs_cable.jpeg" width="600">
 
 4. Route the cables through the ChipShover cable mounts as suitable (shown here also with ChipSHOUTER mounted - but note the Z stage cable routing through the lower mount).
 
