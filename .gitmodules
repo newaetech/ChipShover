@@ -1,0 +1,3 @@
+[submodule "host-python"]
+	path = host-python
+	url = https://github.com/newaetech/ChipShover-Python
