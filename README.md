@@ -4,12 +4,12 @@ ChipShover is an XYZ table &amp; driver, with handy Python interface. It's desig
 
 ChipShover consists of the following main parts:
 
-* Physical XYZ Stage (based on stepper motors).
-* Interposers to mount tools onto the stage.
-* Controller for XYZ stage (based on open-source Marlin firmware).
-* Python interface on computer.
+* Physical XYZ Stage (based on stepper motors)
+* Interposers to mount tools onto the stage
+* Controller for XYZ stage (based on open-source Marlin firmware)
+* Python interface on computer
 
-![](images/stages_chipshover.jpeg)
+![](images/PS1-Assembly.jpg)
 
 ## Physical XYZ Stage
 
@@ -17,9 +17,9 @@ The physical XYZ stage is designed for two major variants, however you can easil
 
 ### Medium-Resolution Stage (< 1 um)
 
-The medium-resolution stage uses a combination of standard aluminum extrusion pieces, some custom CNC made pieces, and a 'fairly good' XYZ stage sourced by NewAE. You can find alternate versions for most of the pieces and interface them with our system.
+The medium-resolution stage is composed of a custom frame and motorized microscope stages. The frame is made entirely of solid machined aluminum.
 
-If you wish to have minimum hassle, this is available in an easy-to-assemble kit. This kit comes with an XYZ stage that has been checked with a laser interferometer to validate the overall linearity, backlash, etc.
+For easiest setup and best results. This stage is available as part of a Kit from NewAE that also includes our controller, power supply, and helpful accesories. We call it the ChipShover PS1 (Positining system 1). 
 
 ### Low-Resolution Stage
 
@@ -32,7 +32,7 @@ The XYZ stage is designed to fit a variety of tools using a 50x50mm bolt pattern
 * ChipSHOUTER® holder.
 * Pen-Style EM probe holder.
 
-These interposers can be 3D printed from files in the repo, or you can buy machined versions.
+The ChipSHOUTER mounting hardware is included in the PS1 kit, otherwise these interposers can be 3D printed or machined from files in the repo.
 
 ## Controllers
 
@@ -42,8 +42,7 @@ The firmware is open-source and is a [build of Marlin2 with a custom board type]
 
 ### ChipShover-One
 
-![](controller-hardware/chipshover-one/images/beta/cs-one-mainunit.jpeg)
-*Beta unit shown with 3D printed parts*
+![](controller-hardware/chipshover-one/images/beta/cs-one-mainunit.jpg)
 
 The ChipShover-One is our own stepper controller. While there are hundreds of already existing controllers out there, we figured why not make it interesting with our own take? Several feature relevant to the ChipShover usage that are not widely available in existing 3D printer driver boards were specifically added:
 
